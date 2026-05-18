@@ -1,0 +1,118 @@
+.carousel {
+  position: relative;
+  margin-bottom: 64px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.track {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--surface);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
+
+.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.slideImg {
+  object-fit: cover;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 1rem;
+  transition: border-color var(--dur), background var(--dur);
+  z-index: 1;
+}
+
+.prev { left: 14px; }
+.next { right: 14px; }
+
+.prev:hover,
+.next:hover {
+  background: var(--surface-hover);
+  border-color: var(--text-muted);
+}
+
+.dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  border: 1px solid var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--dur);
+}
+
+.dotActive {
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.expand {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--text);
+  opacity: 0;
+  transition: opacity var(--dur), border-color var(--dur), background var(--dur);
+  z-index: 2;
+}
+
+.carousel:hover .expand {
+  opacity: 1;
+}
+
+.expand:hover {
+  background: var(--surface-hover);
+  border-color: var(--text-muted);
+}
+
+@media (max-width: 480px) {
+  .expand {
+    opacity: 1;
+  }
+}

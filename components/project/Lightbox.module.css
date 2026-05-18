@@ -1,0 +1,90 @@
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.92);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.img {
+  max-width: 92vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+  display: block;
+  user-select: none;
+}
+
+.close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+}
+
+.close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.prev,
+.next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+.prev:hover,
+.next:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.counter {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 480px) {
+  .prev { left: 8px; }
+  .next { right: 8px; }
+}

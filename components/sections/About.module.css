@@ -1,0 +1,114 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 72px;
+  align-items: start;
+}
+
+.text p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.text p:last-of-type {
+  margin-bottom: 0;
+}
+
+.cvLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 24px;
+  padding: 10px 22px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: border-color var(--dur);
+}
+
+.cvLink:hover {
+  border-color: var(--accent);
+}
+
+.sidebarBlock {
+  margin-bottom: 28px;
+}
+
+.sidebarBlock:last-child {
+  margin-bottom: 0;
+}
+
+.sidebarLabel {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.sidebarList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sidebarList li {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.tagFlow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tagFlow span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  transition: border-color var(--dur), color var(--dur);
+}
+
+.tagFlow span:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+.sidebarLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.sidebarLinks a {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  transition: color var(--dur);
+}
+
+.sidebarLinks a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cvLink {
+    width: 100%;
+    justify-content: center;
+  }
+}
