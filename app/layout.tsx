@@ -17,7 +17,7 @@ const specialGothic = Special_Gothic_Expanded_One({
   display: 'swap',
 })
 
-const baseUrl = 'https://roman-ovcharenko.com' // update before deploy
+const baseUrl = 'https://r-o-design.tech'
 
 const description =
   'Roman Ovcharenko — Product Designer with 6+ years in B2B SaaS, enterprise tools, and design systems. Turning complex products into clear, usable interfaces.'
@@ -36,11 +36,13 @@ export const metadata: Metadata = {
     siteName: 'Roman Ovcharenko',
     title: 'Roman Ovcharenko — Product Designer',
     description,
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Roman Ovcharenko — Product Designer',
     description,
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
