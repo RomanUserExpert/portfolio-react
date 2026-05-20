@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Button from '@/components/ui/Button'
 import CvPreview from './CvPreview'
+import ScrollToTop from '@/components/project/ScrollToTop'
 import styles from './cv.module.css'
 
 const PDF_PATH = '/CV%20%E2%80%94%20Roman%20Ovcharenko.pdf'
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function CvPage() {
   return (
     <section className={styles.page}>
+      <ScrollToTop />
       <Link href="/" className={styles.backLink}>← Back</Link>
       <div className={styles.header}>
         <h1>CV / Resume</h1>

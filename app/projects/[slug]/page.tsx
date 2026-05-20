@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import Tag from '@/components/ui/Tag'
 import SectionLabel from '@/components/ui/SectionLabel'
 import Carousel from '@/components/project/Carousel'
+import BackButton from '@/components/project/BackButton'
+import ScrollToTop from '@/components/project/ScrollToTop'
 import { projects, getProject } from '@/lib/projects'
 import styles from './project.module.css'
 
@@ -30,7 +31,8 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <section className={styles.page}>
-      <Link href="/projects" className={styles.backLink}>← Back</Link>
+      <ScrollToTop />
+      <BackButton />
 
       <div className={styles.header}>
         <h1>{project.title}</h1>

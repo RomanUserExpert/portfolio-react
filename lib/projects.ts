@@ -103,6 +103,49 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: 'ui-token-starter-pack',
+    title: 'UI Token Starter Pack',
+    tags: ['Design Tool', 'Vibe Code', 'Workflow Optimization'],
+    description:
+      'A Figma plugin that generates a complete, production-ready design token system in seconds — color primitives, semantic tokens, spacing, typography, radius, and elevation, all wired to Figma variables with Light and Dark mode out of the box.',
+    cover: '/cases/Ui Token Starter Pack/Main image (1st).png',
+    metaDescription:
+      'UI Token Starter Pack — Figma plugin that generates a complete design token system in seconds. Color, spacing, typography, and more with Light/Dark mode. By Roman Ovcharenko.',
+    images: Array.from({ length: 6 }, (_, i) => ({
+      src: `/cases/Ui Token Starter Pack/img-0${i + 1}.png`,
+      alt: `UI Token Starter Pack — slide ${i + 1}`,
+    })),
+    sections: [
+      {
+        label: 'About Project',
+        paragraphs: [
+          'UI Token Starter Pack is a Figma plugin that generates a complete, production-ready design token system in seconds. Instead of manually creating hundreds of variables, the plugin outputs a structured set of color primitives and semantic tokens, spacing scales, typography variables and text styles, border radius, and elevation shadows — all wired to Figma variables with Light and Dark mode support out of the box.',
+          'The design challenge was making something that feels fast and opinionated by default, but gives enough control for different types of projects — from a landing page to a full SaaS product. The plugin had to feel approachable for freelancers and small teams while producing a token architecture that holds up in real design systems.',
+        ],
+      },
+      {
+        label: 'My Role & Activities',
+        list: [
+          'Defining the full product scope and module structure: Colors, Spacing, Typography, Border Radius, Elevation',
+          'Designing the plugin UI — sidebar navigation, progressive disclosure, preset-first settings to avoid overwhelming users with configuration',
+          'Building the color system logic — shade scale generation using the Ant Design palette algorithm, with per-step hue rotation and saturation curves calibrated for both warm and cool palettes',
+          'Designing and implementing semantic token architecture — Background, Surface, Text, Icon, Border, and Actions layers, all aliased to primitives with Light and Dark mode mappings',
+          'Color validation UX — inline warnings for colors that are too light, too dark, or too pale, with a one-click Fix button that nudges values into a usable range',
+          'Typography system — preset-based size scales (Compact / Standard / Large), multi-font support with category assignment, and automatic Figma text style generation',
+          'Token Stylesheet — a visual preview page generated inside Figma on every run, showing color swatches, spacing bars, type table, radius cards, and elevation cards all bound to the live variables',
+          'Handling Figma\'s free plan constraint — detecting whether multi-mode collections are supported and gracefully falling back to a separate Semantics Dark collection when they aren\'t',
+          'Publishing to Figma Community — manifest setup, plugin ID, dynamic-page API migration',
+        ],
+      },
+      {
+        label: 'Outcome',
+        paragraphs: [
+          'A self-contained design tool that compresses hours of token setup into a single click. Designers get a structured, multi-mode variable system in Figma that\'s ready for component building immediately — without needing to know how design tokens work under the hood. Built entirely through vibe coding: no prior plugin development experience, just design intuition, iteration, and AI-assisted coding.',
+        ],
+      },
+    ],
+  },
+  {
     slug: 'yunona',
     title: 'Yunona',
     tags: ['E-commerce', 'Branding'],
