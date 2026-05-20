@@ -9,9 +9,7 @@ export default function BackButton({ fallback = '/projects' }: Props) {
   const router = useRouter()
 
   const handleBack = () => {
-    const from = document.referrer
-    const isInternal = from && new URL(from).origin === window.location.origin
-    if (isInternal) {
+    if (window.history.length > 1) {
       router.back()
     } else {
       router.push(fallback)
