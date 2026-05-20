@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import ProjectCard from '@/components/project/ProjectCard'
+import BackButton from '@/components/project/BackButton'
 import ScrollToTop from '@/components/project/ScrollToTop'
 import { projects } from '@/lib/projects'
 import styles from './projects.module.css'
@@ -14,7 +14,7 @@ export default function ProjectsPage() {
   return (
     <section className={styles.page}>
       <ScrollToTop />
-      <Link href="/" className={styles.backLink}>← Back</Link>
+      <BackButton fallback="/" />
       <h1 className={styles.heading}>Projects</h1>
       <div className={styles.grid}>
         {projects.map((p) => (

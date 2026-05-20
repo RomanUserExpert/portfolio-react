@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import Button from '@/components/ui/Button'
 import CvPreview from './CvPreview'
+import BackButton from '@/components/project/BackButton'
 import ScrollToTop from '@/components/project/ScrollToTop'
 import styles from './cv.module.css'
 
@@ -16,7 +16,7 @@ export default function CvPage() {
   return (
     <section className={styles.page}>
       <ScrollToTop />
-      <Link href="/" className={styles.backLink}>← Back</Link>
+      <BackButton fallback="/" />
       <div className={styles.header}>
         <h1>CV / Resume</h1>
         <Button href={PDF_PATH} variant="primary" download="CV — Roman Ovcharenko.pdf">
