@@ -89,3 +89,24 @@
   left: 0;
   color: var(--border);
 }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.links a {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 9px;
+  transition: color var(--dur), border-color var(--dur);
+}
+
+.links a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}

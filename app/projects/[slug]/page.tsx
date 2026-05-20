@@ -44,14 +44,21 @@ export default async function ProjectPage({ params }: Props) {
       <Carousel images={project.images} />
 
       <div className={styles.content}>
-        {project.sections.map((section) => (
+        {project.sections.map((section, i) => (
           <div key={section.label} className={styles.section}>
             <SectionLabel>{section.label}</SectionLabel>
-            {section.paragraphs?.map((p, i) => <p key={i}>{p}</p>)}
+            {section.paragraphs?.map((p, j) => <p key={j}>{p}</p>)}
             {section.list && (
               <ul>
-                {section.list.map((item, i) => <li key={i}>{item}</li>)}
+                {section.list.map((item, j) => <li key={j}>{item}</li>)}
               </ul>
+            )}
+            {i === 0 && project.links && project.links.length > 0 && (
+              <div className={styles.links}>
+                {project.links.map((link) => (
+                  <a key={link.href} href={link.href} target="_blank" rel="noopener">{link.label}</a>
+                ))}
+              </div>
             )}
           </div>
         ))}

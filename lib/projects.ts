@@ -4,6 +4,11 @@ export type ProjectSection = {
   list?: string[]
 }
 
+export type ProjectLink = {
+  label: string
+  href: string
+}
+
 export type Project = {
   slug: string
   title: string
@@ -13,6 +18,7 @@ export type Project = {
   metaDescription: string
   images: { src: string; alt: string }[]
   sections: ProjectSection[]
+  links?: ProjectLink[]
   featured?: boolean
 }
 
@@ -111,6 +117,10 @@ export const projects: Project[] = [
     cover: '/cases/Ui Token Starter Pack/Main image (1st).png',
     metaDescription:
       'UI Token Starter Pack — Figma plugin that generates a complete design token system in seconds. Color, spacing, typography, and more with Light/Dark mode. By Roman Ovcharenko.',
+    links: [
+      { label: 'GitHub ↗', href: 'https://github.com/RomanUserExpert/figma-token-generator' },
+      { label: 'Figma Community ↗', href: 'https://www.figma.com/community/plugin/1636308921845635089/ui-token-starter-pack' },
+    ],
     images: Array.from({ length: 6 }, (_, i) => ({
       src: `/cases/Ui Token Starter Pack/img-0${i + 1}.png`,
       alt: `UI Token Starter Pack — slide ${i + 1}`,
