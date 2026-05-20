@@ -17,6 +17,7 @@ const profiles = [
   { label: 'Behance ↗', href: 'https://www.behance.net/romanovcharenko' },
   { label: 'Dribbble ↗', href: 'https://dribbble.com/Roman_Genjutsu' },
   { label: 'LinkedIn ↗', href: 'https://www.linkedin.com/in/roman-ovcharenko-a10066186/' },
+  { label: 'GitHub ↗', href: 'https://github.com/RomanUserExpert' },
 ]
 
 export default function About() {
