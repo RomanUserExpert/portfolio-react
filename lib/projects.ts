@@ -156,6 +156,43 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: 'vaultex',
+    title: 'Vaultex',
+    tags: ['Fintech', 'Trading', 'Dashboard'],
+    description:
+      'Professional trading platform for active traders and portfolio managers across equities, crypto, forex, and commodities — information-dense interfaces designed for speed, clarity, and a continuous multi-screen trading workflow.',
+    cover: '/cases/Vaultex/Main image (1st).png',
+    metaDescription:
+      'Vaultex — Professional trading and portfolio management platform. Dense financial data interfaces designed for speed and clarity across four asset classes. Case study by Roman Ovcharenko.',
+    images: Array.from({ length: 8 }, (_, i) => ({
+      src: `/cases/Vaultex/${i + 1}.png`,
+      alt: `Vaultex — slide ${i + 1}`,
+    })),
+    sections: [
+      {
+        label: 'About Project',
+        paragraphs: [
+          'Vaultex is a professional trading platform for active traders and portfolio managers operating across equities, crypto, forex, and commodities. The design challenge was building a product where information density is a requirement rather than a problem to eliminate — time-sensitive decisions, four asset classes, and multiple workflows that needed to function as one coherent system.',
+        ],
+      },
+      {
+        label: 'My Role & Activities',
+        list: [
+          'Competitive analysis and domain research — audited professional trading platforms to understand where data density serves experienced users and where it becomes noise, establishing the core design principle: high information density is acceptable, ambiguity under time pressure is not',
+          'Information architecture and user flows — structured the product around the natural sequence of a trader\'s workflow: monitor, manage, execute, assess risk, audit, research, with each stage mapped to a dedicated screen with a single primary job',
+          'Interface design and iteration — ran exploratory cycles across layout, typographic hierarchy, spatial grouping, and semantic color to separate status signals from numerical data, validating against a single test: can a trader extract a meaningful signal in under two seconds',
+          'Design system and component architecture — built a component library supporting four asset classes, multiple data states, and real-time visual feedback, with semantic color tokens, consistent number formatting, and a shared status language across all contexts',
+        ],
+      },
+      {
+        label: 'Outcome',
+        paragraphs: [
+          'A trading platform where the full workflow — from portfolio monitoring to order execution to risk assessment — runs as a continuous, context-preserving flow rather than a set of disconnected screens. Dense financial data reads at a glance rather than requiring interpretation. The design system provides a stable foundation that absorbs product growth without re-solving foundational layout and pattern decisions.',
+        ],
+      },
+    ],
+  },
+  {
     slug: 'yunona',
     title: 'Yunona',
     tags: ['E-commerce', 'Branding'],
