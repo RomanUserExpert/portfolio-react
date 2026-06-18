@@ -193,6 +193,46 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: 'risklayer',
+    title: 'RiskLayer',
+    tags: ['Fintech', 'Enterprise SaaS', 'Interaction Design'],
+    description:
+      'Multi-module B2B platform for CROs, Compliance Officers, and Risk Analysts — six distinct workflows covering risk monitoring, stress testing, compliance rule management, exposure tracking, and regulatory audit, unified under a single coherent system.',
+    cover: '/cases/RiskLayer/cover.png',
+    metaDescription:
+      'RiskLayer — Enterprise risk and compliance platform for financial institutions. Six-module B2B product designed for CROs, Compliance Officers, and Risk Analysts. Case study by Roman Ovcharenko.',
+    images: [
+      ...Array.from({ length: 5 }, (_, i) => ({
+        src: `/cases/RiskLayer/${i + 1}.png`,
+        alt: `RiskLayer — slide ${i + 1}`,
+      })),
+      { src: '/cases/RiskLayer/6v2.png', alt: 'RiskLayer — slide 6' },
+      { src: '/cases/RiskLayer/7.png', alt: 'RiskLayer — slide 7' },
+    ],
+    sections: [
+      {
+        label: 'About Project',
+        paragraphs: [
+          'RiskLayer is a multi-module B2B platform for CROs, Compliance Officers, and Risk Analysts working in fintech and institutional finance. The product spans risk monitoring, stress testing, compliance rule management, exposure tracking, and regulatory audit — six distinct workflows with fundamentally different user goals and information needs. The core design challenge was creating a coherent system across these modules without sacrificing the data density each role requires.',
+        ],
+      },
+      {
+        label: 'My Role & Activities',
+        list: [
+          'Competitive Analysis & Domain Research — mapped the landscape across Moody\'s RiskIntegrity, AuditBoard, SAS Viya Risk, and SS&C Algorithmics, identifying a consistent gap between analytical depth and navigability',
+          'Information Architecture & Role-Based Navigation — resolved the tension between a shared navigation shell and role-specific workflows, resulting in a two-group sidebar structure (Monitor / Manage) derived from how CROs and Compliance Officers move through the product differently',
+          'Designing for Data Density and Progressive Disclosure — managed information hierarchy across six data-heavy screens: a 5×5 risk matrix with drill-down, a shock parameter table with override states, a compliance condition builder with nested logic, each requiring its own disclosure strategy',
+        ],
+      },
+      {
+        label: 'Outcome',
+        paragraphs: [
+          'RiskLayer demonstrates a complete enterprise risk platform designed for three distinct professional roles operating under regulatory pressure. Risk managers get an actionable dashboard with drill-down capability. Compliance officers get a no-code rule builder with human-readable logic preview. Analysts get a stress testing environment with scenario comparison and delta analysis. The system holds together visually and structurally across six screens that could otherwise fragment into six unrelated tools.',
+        ],
+      },
+    ],
+  },
+  {
     slug: 'yunona',
     title: 'Yunona',
     tags: ['E-commerce', 'Branding'],
