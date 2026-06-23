@@ -33,6 +33,15 @@ export default function InteractiveGridPattern({
   }, [])
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      const col = Math.floor(Math.random() * cols)
+      const row = Math.floor(Math.random() * rows)
+      pushTrail({ x: col * squareSize + 1, y: row * squareSize + 1 })
+    }, 200)
+    return () => clearInterval(interval)
+  }, [squareSize, cols, rows, pushTrail])
+
+  useEffect(() => {
     const svg = svgRef.current
     if (!svg) return
 
