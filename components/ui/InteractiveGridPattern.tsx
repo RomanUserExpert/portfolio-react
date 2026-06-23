@@ -13,9 +13,9 @@ interface Cell { x: number; y: number }
 interface TrailCell extends Cell { id: number }
 
 export default function InteractiveGridPattern({
-  squareSize = 22,
-  cols = 90,
-  rows = 50,
+  squareSize = 33,
+  cols = 62,
+  rows = 34,
 }: Props) {
   const svgRef = useRef<SVGSVGElement>(null)
   const prevCell = useRef<Cell | null>(null)
