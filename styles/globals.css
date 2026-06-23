@@ -35,6 +35,10 @@
   /* Motion */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --dur:  0.18s;
+
+  /* Grid pattern */
+  --grid-line:  rgba(13, 13, 13, 0.07);
+  --grid-hover: rgba(224, 95, 3, 0.11);
 }
 
 [data-theme="dark"] {
@@ -45,6 +49,9 @@
   --border:        #52524F;
   --surface:       #1E1E1C;
   --surface-hover: #232321;
+
+  --grid-line:  rgba(240, 239, 233, 0.055);
+  --grid-hover: rgba(224, 95, 3, 0.16);
 }
 
 /* ═══════════════════════════════════

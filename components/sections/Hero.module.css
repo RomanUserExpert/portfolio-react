@@ -5,6 +5,13 @@
   flex-direction: column;
   justify-content: center;
   padding: 64px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
 }
 
 .role {
