@@ -114,7 +114,7 @@ export default function InteractiveGridPattern({
           y={active.y}
           width={squareSize - 1}
           height={squareSize - 1}
-          fill="var(--grid-hover)"
+          fill="var(--grid-active)"
         />
       )}
     </svg>
