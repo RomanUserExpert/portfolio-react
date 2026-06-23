@@ -52,7 +52,7 @@ export default function InteractiveGridPattern({
               width={squareSize - 1}
               height={squareSize - 1}
               fill={isHovered ? 'var(--grid-hover)' : 'transparent'}
-              style={{ transition: isHovered ? 'fill 0.08s ease' : 'fill 0.9s ease' }}
+              style={{ transition: isHovered ? 'fill 0.08s ease' : 'fill 1.6s ease' }}
               onMouseEnter={() => setHovered(idx)}
               onMouseLeave={() => setHovered(null)}
             />
