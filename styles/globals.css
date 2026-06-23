@@ -51,7 +51,7 @@
   --surface:       #1E1E1C;
   --surface-hover: #232321;
 
-  --grid-line:   rgba(240, 239, 233, 0.0605);
+  --grid-line:   rgba(240, 239, 233, 0.15);
   --grid-active: rgba(224, 95, 3, 0.42);
   --grid-hover:  rgba(224, 95, 3, 0.30);
 }
