@@ -68,6 +68,7 @@ body {
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
   transition:
     background var(--dur) var(--ease),
     color var(--dur) var(--ease);

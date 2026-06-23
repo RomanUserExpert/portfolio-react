@@ -6,7 +6,20 @@
   justify-content: center;
   padding: 64px 0;
   position: relative;
-  overflow: hidden;
+}
+
+.gridWrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.gridWrap > * {
+  pointer-events: auto;
 }
 
 .content {

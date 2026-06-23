@@ -5,7 +5,9 @@ import styles from './Hero.module.css'
 export default function Hero() {
   return (
     <section id="hero" className={styles.hero}>
-      <InteractiveGridPattern />
+      <div className={styles.gridWrap}>
+        <InteractiveGridPattern cols={60} rows={26} />
+      </div>
 
       <div className={styles.content}>
         <p className={styles.role}>Product Designer</p>
