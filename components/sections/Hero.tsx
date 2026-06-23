@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <section id="hero" className={styles.hero}>
       <div className={styles.gridWrap}>
-        <InteractiveGridPattern cols={60} rows={26} />
+        <InteractiveGridPattern />
       </div>
 
       <div className={styles.content}>
