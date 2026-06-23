@@ -38,7 +38,7 @@
 
   /* Grid pattern */
   --grid-line:  rgba(13, 13, 13, 0.077);
-  --grid-hover: rgba(224, 95, 3, 0.121);
+  --grid-hover: rgba(224, 95, 3, 0.139);
 }
 
 [data-theme="dark"] {
@@ -51,7 +51,7 @@
   --surface-hover: #232321;
 
   --grid-line:  rgba(240, 239, 233, 0.0605);
-  --grid-hover: rgba(224, 95, 3, 0.176);
+  --grid-hover: rgba(224, 95, 3, 0.202);
 }
 
 /* ═══════════════════════════════════
