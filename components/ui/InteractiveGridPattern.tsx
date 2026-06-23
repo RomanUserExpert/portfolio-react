@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import styles from './InteractiveGridPattern.module.css'
 
 interface Props {
@@ -32,29 +32,42 @@ export default function InteractiveGridPattern({
     setTrail(t => t.filter(c => c.id !== id))
   }, [])
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
+  useEffect(() => {
     const svg = svgRef.current
     if (!svg) return
-    const r = svg.getBoundingClientRect()
-    const col = Math.floor((e.clientX - r.left) / squareSize)
-    const row = Math.floor((e.clientY - r.top) / squareSize)
-    if (col < 0 || col >= cols || row < 0 || row >= rows) return
 
-    const next: Cell = { x: col * squareSize + 1, y: row * squareSize + 1 }
-    const prev = prevCell.current
-
-    if (prev && (prev.x !== next.x || prev.y !== next.y)) {
-      pushTrail(prev)
+    const flush = () => {
+      if (prevCell.current) {
+        pushTrail(prevCell.current)
+        prevCell.current = null
+        setActive(null)
+      }
     }
-    prevCell.current = next
-    setActive(next)
-  }, [squareSize, cols, rows, pushTrail])
 
-  const handleMouseLeave = useCallback(() => {
-    if (prevCell.current) pushTrail(prevCell.current)
-    prevCell.current = null
-    setActive(null)
-  }, [pushTrail])
+    const onMove = (e: MouseEvent) => {
+      const r = svg.getBoundingClientRect()
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+        flush()
+        return
+      }
+      const col = Math.floor((e.clientX - r.left) / squareSize)
+      const row = Math.floor((e.clientY - r.top) / squareSize)
+      if (col < 0 || col >= cols || row < 0 || row >= rows) return
+
+      const next: Cell = { x: col * squareSize + 1, y: row * squareSize + 1 }
+      const prev = prevCell.current
+      if (prev && (prev.x !== next.x || prev.y !== next.y)) pushTrail(prev)
+      prevCell.current = next
+      setActive(next)
+    }
+
+    window.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseleave', flush)
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseleave', flush)
+    }
+  }, [squareSize, cols, rows, pushTrail])
 
   return (
     <svg
@@ -62,8 +75,7 @@ export default function InteractiveGridPattern({
       xmlns="http://www.w3.org/2000/svg"
       className={styles.svg}
       aria-hidden="true"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      style={{ pointerEvents: 'none' }}
     >
       <defs>
         <pattern
