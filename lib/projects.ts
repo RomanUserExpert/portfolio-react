@@ -233,6 +233,43 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: 'archon',
+    title: 'Archon',
+    tags: ['Fintech', 'SaaS', 'Data Density'],
+    description:
+      'Enterprise record search and management platform for revenue and operations teams — compound filter logic, high-density results tables, bulk operations, and export flows built for datasets too large for a standard CRM.',
+    cover: '/cases/Archon/cover.png',
+    metaDescription:
+      'Archon — Enterprise record search and management platform for fintech B2B teams. Compound filtering, bulk operations, and export flows for large-scale datasets. Case study by Roman Ovcharenko.',
+    images: Array.from({ length: 6 }, (_, i) => ({
+      src: `/cases/Archon/${i + 1}.png`,
+      alt: `Archon — slide ${i + 1}`,
+    })),
+    sections: [
+      {
+        label: 'About Project',
+        paragraphs: [
+          'Archon is a record search and management platform for revenue and operations teams handling large account and contract datasets — built for the moment a CRM\'s basic search stops being enough. The core challenge was compound filtering: letting non-technical users build AND/OR query logic across dozens of fields without ever seeing the word "query." Every downstream screen had to stay usable at scale, from a single record to a 124,000-row dataset.',
+        ],
+      },
+      {
+        label: 'My Role & Activities',
+        list: [
+          'Heuristic Evaluation — audited filter builders in Salesforce, Airtable, and Retool to identify where compound logic UX breaks down; research shaped the decision to color-code AND and OR groups distinctly rather than relying on text labels alone',
+          'Information Architecture — mapped the record lifecycle (search, inspect, act, export) to determine screen sequence and what belonged in a side panel versus a dedicated page; export became a full wizard once it was clear scheduling and column selection couldn\'t compress into an overlay',
+          'Designing for Data Density — solved the results table challenge with progressive disclosure: a record detail panel holds risk scoring and contact context off the main grid, keeping the table lean and scannable at 124,000-row scale',
+          'State and Edge Case Design — bulk operations handle partial failure gracefully; the status-change flow detects record-level conflicts and recalculates the affected count live so users always see an honest number before committing',
+        ],
+      },
+      {
+        label: 'Outcome',
+        paragraphs: [
+          'Archon gives operations teams a way to interrogate large datasets with the same logical precision as a database query, without writing one. Saved filters turn one-off investigations into reusable team assets, and conflict-aware bulk actions mean status changes and exports no longer require a "let me check if anyone else is editing this" Slack message first. Six screens that share one data model, one visual language, and one underlying philosophy: reveal complexity gradually rather than all at once.',
+        ],
+      },
+    ],
+  },
+  {
     slug: 'yunona',
     title: 'Yunona',
     tags: ['E-commerce', 'Branding'],
