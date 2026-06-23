@@ -9,28 +9,52 @@ interface Props {
   rows?: number
 }
 
+interface Cell { x: number; y: number }
+interface TrailCell extends Cell { id: number }
+
 export default function InteractiveGridPattern({
   squareSize = 22,
   cols = 90,
   rows = 50,
 }: Props) {
   const svgRef = useRef<SVGSVGElement>(null)
-  const [cell, setCell] = useState<{ x: number; y: number } | null>(null)
-  const [visible, setVisible] = useState(false)
+  const prevCell = useRef<Cell | null>(null)
+  const idCounter = useRef(0)
+
+  const [active, setActive] = useState<Cell | null>(null)
+  const [trail, setTrail] = useState<TrailCell[]>([])
+
+  const pushTrail = useCallback((cell: Cell) => {
+    setTrail(t => [...t, { ...cell, id: idCounter.current++ }].slice(-60))
+  }, [])
+
+  const removeTrail = useCallback((id: number) => {
+    setTrail(t => t.filter(c => c.id !== id))
+  }, [])
 
   const handleMouseMove = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     const svg = svgRef.current
     if (!svg) return
-    const rect = svg.getBoundingClientRect()
-    const col = Math.floor((e.clientX - rect.left) / squareSize)
-    const row = Math.floor((e.clientY - rect.top) / squareSize)
-    if (col >= 0 && col < cols && row >= 0 && row < rows) {
-      setCell({ x: col * squareSize + 1, y: row * squareSize + 1 })
-      setVisible(true)
-    }
-  }, [squareSize, cols, rows])
+    const r = svg.getBoundingClientRect()
+    const col = Math.floor((e.clientX - r.left) / squareSize)
+    const row = Math.floor((e.clientY - r.top) / squareSize)
+    if (col < 0 || col >= cols || row < 0 || row >= rows) return
 
-  const handleMouseLeave = useCallback(() => setVisible(false), [])
+    const next: Cell = { x: col * squareSize + 1, y: row * squareSize + 1 }
+    const prev = prevCell.current
+
+    if (prev && (prev.x !== next.x || prev.y !== next.y)) {
+      pushTrail(prev)
+    }
+    prevCell.current = next
+    setActive(next)
+  }, [squareSize, cols, rows, pushTrail])
+
+  const handleMouseLeave = useCallback(() => {
+    if (prevCell.current) pushTrail(prevCell.current)
+    prevCell.current = null
+    setActive(null)
+  }, [pushTrail])
 
   return (
     <svg
@@ -59,17 +83,26 @@ export default function InteractiveGridPattern({
 
       <rect width="100%" height="100%" fill="url(#igp-grid)" />
 
-      {cell && (
+      {trail.map(cell => (
         <rect
+          key={cell.id}
           x={cell.x}
           y={cell.y}
           width={squareSize - 1}
           height={squareSize - 1}
           fill="var(--grid-hover)"
-          style={{
-            opacity: visible ? 1 : 0,
-            transition: visible ? 'opacity 0.08s ease' : 'opacity 1.6s ease',
-          }}
+          className={styles.trailCell}
+          onAnimationEnd={() => removeTrail(cell.id)}
+        />
+      ))}
+
+      {active && (
+        <rect
+          x={active.x}
+          y={active.y}
+          width={squareSize - 1}
+          height={squareSize - 1}
+          fill="var(--grid-hover)"
         />
       )}
     </svg>

@@ -13,3 +13,12 @@
   mask-composite: intersect;
   -webkit-mask-composite: source-in;
 }
+
+@keyframes igp-fade {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.trailCell {
+  animation: igp-fade 1.6s ease forwards;
+}
