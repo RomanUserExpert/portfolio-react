@@ -24,6 +24,47 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: 'risklayer',
+    title: 'RiskLayer',
+    tags: ['Fintech', 'Enterprise SaaS', 'Interaction Design'],
+    description:
+      'Multi-module B2B platform for CROs, Compliance Officers, and Risk Analysts — six distinct workflows covering risk monitoring, stress testing, compliance rule management, exposure tracking, and regulatory audit, unified under a single coherent system.',
+    cover: '/cases/RiskLayer/cover.png',
+    metaDescription:
+      'RiskLayer — Enterprise risk and compliance platform for financial institutions. Six-module B2B product designed for CROs, Compliance Officers, and Risk Analysts. Case study by Roman Ovcharenko.',
+    featured: true,
+    images: [
+      ...Array.from({ length: 5 }, (_, i) => ({
+        src: `/cases/RiskLayer/${i + 1}.png`,
+        alt: `RiskLayer — slide ${i + 1}`,
+      })),
+      { src: '/cases/RiskLayer/6v2.png', alt: 'RiskLayer — slide 6' },
+      { src: '/cases/RiskLayer/7.png', alt: 'RiskLayer — slide 7' },
+    ],
+    sections: [
+      {
+        label: 'About Project',
+        paragraphs: [
+          'RiskLayer is a multi-module B2B platform for CROs, Compliance Officers, and Risk Analysts working in fintech and institutional finance. The product spans risk monitoring, stress testing, compliance rule management, exposure tracking, and regulatory audit — six distinct workflows with fundamentally different user goals and information needs. The core design challenge was creating a coherent system across these modules without sacrificing the data density each role requires.',
+        ],
+      },
+      {
+        label: 'My Role & Activities',
+        list: [
+          'Competitive Analysis & Domain Research — mapped the landscape across Moody\'s RiskIntegrity, AuditBoard, SAS Viya Risk, and SS&C Algorithmics, identifying a consistent gap between analytical depth and navigability',
+          'Information Architecture & Role-Based Navigation — resolved the tension between a shared navigation shell and role-specific workflows, resulting in a two-group sidebar structure (Monitor / Manage) derived from how CROs and Compliance Officers move through the product differently',
+          'Designing for Data Density and Progressive Disclosure — managed information hierarchy across six data-heavy screens: a 5×5 risk matrix with drill-down, a shock parameter table with override states, a compliance condition builder with nested logic, each requiring its own disclosure strategy',
+        ],
+      },
+      {
+        label: 'Outcome',
+        paragraphs: [
+          'RiskLayer demonstrates a complete enterprise risk platform designed for three distinct professional roles operating under regulatory pressure. Risk managers get an actionable dashboard with drill-down capability. Compliance officers get a no-code rule builder with human-readable logic preview. Analysts get a stress testing environment with scenario comparison and delta analysis. The system holds together visually and structurally across six screens that could otherwise fragment into six unrelated tools.',
+        ],
+      },
+    ],
+  },
+  {
     slug: 'insight',
     title: 'Insight',
     tags: ['AdTech', 'SaaS', 'Dashboard'],
@@ -74,7 +115,6 @@ export const projects: Project[] = [
     cover: '/cases/TeamA/cover.png',
     metaDescription:
       'TeamAdvance — Enterprise internal talent marketplace and employee engagement platform. Case study by Roman Ovcharenko.',
-    featured: true,
     images: Array.from({ length: 10 }, (_, i) => ({
       src: `/cases/TeamA/img-0${i + 1}.png`,
       alt: `TeamAdvance slide ${i + 1}`,
@@ -117,6 +157,7 @@ export const projects: Project[] = [
     cover: '/cases/Ui Token Starter Pack/Main image (1st).png',
     metaDescription:
       'UI Token Starter Pack — Figma plugin that generates a complete design token system in seconds. Color, spacing, typography, and more with Light/Dark mode. By Roman Ovcharenko.',
+    featured: true,
     links: [
       { label: 'GitHub ↗', href: 'https://github.com/RomanUserExpert/figma-token-generator' },
       { label: 'Figma Community ↗', href: 'https://www.figma.com/community/plugin/1636308921845635089/ui-token-starter-pack' },
@@ -188,46 +229,6 @@ export const projects: Project[] = [
         label: 'Outcome',
         paragraphs: [
           'A trading platform where the full workflow — from portfolio monitoring to order execution to risk assessment — runs as a continuous, context-preserving flow rather than a set of disconnected screens. Dense financial data reads at a glance rather than requiring interpretation. The design system provides a stable foundation that absorbs product growth without re-solving foundational layout and pattern decisions.',
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'risklayer',
-    title: 'RiskLayer',
-    tags: ['Fintech', 'Enterprise SaaS', 'Interaction Design'],
-    description:
-      'Multi-module B2B platform for CROs, Compliance Officers, and Risk Analysts — six distinct workflows covering risk monitoring, stress testing, compliance rule management, exposure tracking, and regulatory audit, unified under a single coherent system.',
-    cover: '/cases/RiskLayer/cover.png',
-    metaDescription:
-      'RiskLayer — Enterprise risk and compliance platform for financial institutions. Six-module B2B product designed for CROs, Compliance Officers, and Risk Analysts. Case study by Roman Ovcharenko.',
-    images: [
-      ...Array.from({ length: 5 }, (_, i) => ({
-        src: `/cases/RiskLayer/${i + 1}.png`,
-        alt: `RiskLayer — slide ${i + 1}`,
-      })),
-      { src: '/cases/RiskLayer/6v2.png', alt: 'RiskLayer — slide 6' },
-      { src: '/cases/RiskLayer/7.png', alt: 'RiskLayer — slide 7' },
-    ],
-    sections: [
-      {
-        label: 'About Project',
-        paragraphs: [
-          'RiskLayer is a multi-module B2B platform for CROs, Compliance Officers, and Risk Analysts working in fintech and institutional finance. The product spans risk monitoring, stress testing, compliance rule management, exposure tracking, and regulatory audit — six distinct workflows with fundamentally different user goals and information needs. The core design challenge was creating a coherent system across these modules without sacrificing the data density each role requires.',
-        ],
-      },
-      {
-        label: 'My Role & Activities',
-        list: [
-          'Competitive Analysis & Domain Research — mapped the landscape across Moody\'s RiskIntegrity, AuditBoard, SAS Viya Risk, and SS&C Algorithmics, identifying a consistent gap between analytical depth and navigability',
-          'Information Architecture & Role-Based Navigation — resolved the tension between a shared navigation shell and role-specific workflows, resulting in a two-group sidebar structure (Monitor / Manage) derived from how CROs and Compliance Officers move through the product differently',
-          'Designing for Data Density and Progressive Disclosure — managed information hierarchy across six data-heavy screens: a 5×5 risk matrix with drill-down, a shock parameter table with override states, a compliance condition builder with nested logic, each requiring its own disclosure strategy',
-        ],
-      },
-      {
-        label: 'Outcome',
-        paragraphs: [
-          'RiskLayer demonstrates a complete enterprise risk platform designed for three distinct professional roles operating under regulatory pressure. Risk managers get an actionable dashboard with drill-down capability. Compliance officers get a no-code rule builder with human-readable logic preview. Analysts get a stress testing environment with scenario comparison and delta analysis. The system holds together visually and structurally across six screens that could otherwise fragment into six unrelated tools.',
         ],
       },
     ],
@@ -307,6 +308,43 @@ export const projects: Project[] = [
         label: 'Outcome',
         paragraphs: [
           'A clean, responsive e-commerce experience that makes browsing easy and checkout fast. A consistent design language across merchandising, catalog, and account flows — giving the team a foundation to launch new categories, promotions, and checkout variations without rebuilding core patterns.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'prism-bi',
+    title: 'Prism BI',
+    tags: ['Fintech', 'Self-serve BI', 'Design System'],
+    description:
+      'Self-serve analytics builder for payments teams — a six-screen system covering a drag-and-drop dashboard builder, chart configurator, connection wizard, read-only consumption view, scheduling flow, and row-level permissions model.',
+    cover: '/cases/Prism BI/cover.png',
+    metaDescription:
+      'Prism BI — Self-serve analytics builder for payments teams. Six-screen system: builder, configurator, connection wizard, scheduling, and row-level access control. Case study by Roman Ovcharenko.',
+    featured: true,
+    images: Array.from({ length: 7 }, (_, i) => ({
+      src: `/cases/Prism BI/${i + 2}.png`,
+      alt: `Prism BI — slide ${i + 1}`,
+    })),
+    sections: [
+      {
+        label: 'About Project',
+        paragraphs: [
+          'Prism BI lets analysts and finance leads at a payments company build, schedule, and govern their own dashboards without filing a ticket with data engineering. The challenge wasn\'t any single screen — it was making one coherent system out of six different interaction modes: a drag-and-drop builder, a full-screen chart configurator, a connection wizard, a read-only consumption view, a scheduling flow, and a permissions model with row-level data scoping.',
+        ],
+      },
+      {
+        label: 'My Role & Activities',
+        list: [
+          'Stakeholder interviews & analytics review — early conversations with an analytics lead and finance stakeholders surfaced the real failure mode: people weren\'t struggling to read dashboards, they were waiting on engineering for new ones; that reframed the brief from "design a dashboard" to "design a builder," shaping every downstream decision',
+          'Information architecture — edit vs. view duality: the key structural call was splitting the dashboard into two distinct modes rather than one screen with a toggle — a builder with grid handles and a contextual inspector, and a published read-only view with drill-down replacing edit chrome; treating them as separate problems kept each screen focused on its actual job',
+          'Role-based access modeling — row-level permissions needed compound logic (a regional team seeing only its rows, sometimes across an OR condition spanning two regions) without turning the screen into a raw query builder; reusing a compound-rule pattern from elsewhere in the portfolio kept the model consistent across projects',
+        ],
+      },
+      {
+        label: 'Outcome',
+        paragraphs: [
+          'What started as "build a dashboard" became a six-screen system where each surface earns its place: builders feel like builders, consumers get a clean read-only view, and governance is a first-class screen rather than a buried setting. An analyst can go from connecting a source to a scheduled, access-controlled report without writing a support ticket. The row-level access model and the edit/view split are reusable patterns the team can extend as new dashboards get added.',
         ],
       },
     ],
