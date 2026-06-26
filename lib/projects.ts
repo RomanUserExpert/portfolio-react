@@ -317,10 +317,10 @@ export const projects: Project[] = [
     title: 'Prism BI',
     tags: ['Fintech', 'Self-serve BI', 'Design System'],
     description:
-      'Self-serve analytics builder for payments teams — a six-screen system covering a drag-and-drop dashboard builder, chart configurator, connection wizard, read-only consumption view, scheduling flow, and row-level permissions model.',
+      'Self-serve analytics builder for payments teams — making the full path from raw data to a trusted, shareable report feel like one coherent system instead of a loose collection of admin tools bolted together over time.',
     cover: '/cases/Prism BI/cover.png',
     metaDescription:
-      'Prism BI — Self-serve analytics builder for payments teams. Six-screen system: builder, configurator, connection wizard, scheduling, and row-level access control. Case study by Roman Ovcharenko.',
+      'Prism BI — Self-serve analytics builder for payments teams. Edit/view duality, row-level access control, and end-to-end dashboard governance. Case study by Roman Ovcharenko.',
     featured: true,
     images: Array.from({ length: 7 }, (_, i) => ({
       src: `/cases/Prism BI/${i + 2}.png`,
@@ -330,21 +330,21 @@ export const projects: Project[] = [
       {
         label: 'About Project',
         paragraphs: [
-          'Prism BI lets analysts and finance leads at a payments company build, schedule, and govern their own dashboards without filing a ticket with data engineering. The challenge wasn\'t any single screen — it was making one coherent system out of six different interaction modes: a drag-and-drop builder, a full-screen chart configurator, a connection wizard, a read-only consumption view, a scheduling flow, and a permissions model with row-level data scoping.',
+          'Prism BI lets analysts and finance leads at a payments company build, schedule, and govern their own dashboards without filing a ticket with data engineering. The challenge wasn\'t any single interaction — it was making the full path from raw data to a trusted, shareable report feel like one coherent system instead of a loose collection of admin tools bolted together over time.',
         ],
       },
       {
         label: 'My Role & Activities',
         list: [
           'Stakeholder interviews & analytics review — early conversations with an analytics lead and finance stakeholders surfaced the real failure mode: people weren\'t struggling to read dashboards, they were waiting on engineering for new ones; that reframed the brief from "design a dashboard" to "design a builder," shaping every downstream decision',
-          'Information architecture — edit vs. view duality: the key structural call was splitting the dashboard into two distinct modes rather than one screen with a toggle — a builder with grid handles and a contextual inspector, and a published read-only view with drill-down replacing edit chrome; treating them as separate problems kept each screen focused on its actual job',
+          'Information architecture — edit vs. view duality: the key structural call was treating editing and consuming as two separate problems rather than one screen with a mode toggle; builders needed room to manipulate layout and data mappings, consumers needed a clean surface for reading numbers and drilling into the records behind them; resolving that early prevented a messy hybrid screen trying to serve both audiences at once',
           'Role-based access modeling — row-level permissions needed compound logic (a regional team seeing only its rows, sometimes across an OR condition spanning two regions) without turning the screen into a raw query builder; reusing a compound-rule pattern from elsewhere in the portfolio kept the model consistent across projects',
         ],
       },
       {
         label: 'Outcome',
         paragraphs: [
-          'What started as "build a dashboard" became a six-screen system where each surface earns its place: builders feel like builders, consumers get a clean read-only view, and governance is a first-class screen rather than a buried setting. An analyst can go from connecting a source to a scheduled, access-controlled report without writing a support ticket. The row-level access model and the edit/view split are reusable patterns the team can extend as new dashboards get added.',
+          'What started as "build a dashboard" became a self-serve analytics platform where editing, consumption, and governance are each treated as distinct, intentional surfaces rather than one overloaded screen. An analyst can go from connecting a source to a scheduled, access-controlled report without writing a support ticket. The row-level access model and the edit/view split are reusable patterns the team can extend as new dashboards get added.',
         ],
       },
     ],
