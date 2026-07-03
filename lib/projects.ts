@@ -349,6 +349,43 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    slug: 'nexuscrm',
+    title: 'NexusCRM',
+    tags: ['Sales Ops', 'Enterprise SaaS', 'Workflow Automation'],
+    description:
+      'Sales operations platform for mid-market B2B teams — pipeline, outreach, and forecasting unified under one locked dataset, so a weighted pipeline number means the same thing on the board and in the quarterly forecast.',
+    cover: '/cases/NexusCRM/Main image (1st).png',
+    metaDescription:
+      'NexusCRM — Sales operations platform for mid-market B2B teams unifying pipeline, outreach, and forecasting. Case study by Roman Ovcharenko.',
+    images: Array.from({ length: 6 }, (_, i) => ({
+      src: `/cases/NexusCRM/${i + 1}.png`,
+      alt: `NexusCRM — slide ${i + 1}`,
+    })),
+    sections: [
+      {
+        label: 'About Project',
+        paragraphs: [
+          'NexusCRM is a sales operations platform for mid-market B2B teams running pipeline, outreach, and forecasting through one system instead of three disconnected tools. The core challenge wasn\'t any individual screen — it was keeping six interconnected modules honest against each other, so a weighted pipeline number means the same thing whether a rep is scanning the board or a director is closing the quarterly forecast.',
+        ],
+      },
+      {
+        label: 'My Role & Activities',
+        list: [
+          'Competitive Benchmarking — mapped how Pipedrive, HubSpot, and Outreach/Salesloft handle kanban-to-table switching, deal-rot signaling, and cadence branching, then made deliberate departures where convention didn\'t fit an enterprise context, rather than defaulting to a prior project\'s pattern',
+          'Cross-Module Data Architecture — every figure traces back to one locked dataset; weighted pipeline value, quota attainment, and forecast variance are calculated once and referenced everywhere downstream, so a rep\'s pipeline review and a manager\'s forecast rollup never quietly disagree',
+          'Workflow Automation Design — the email sequence builder needed to demonstrate real sales-ops sophistication, not a mail-merge queue with a visual skin; designed branching logic — an open/no-open condition that splits a cadence into two paths and reconverges before a final send — as structural proof this is automation, not a linear list',
+          'Design System & Theming — built a token architecture where brand color is strictly decoupled from semantic status colors and chart palettes, so the product supports dark and light themes without any color carrying two conflicting meanings',
+        ],
+      },
+      {
+        label: 'Outcome',
+        paragraphs: [
+          'NexusCRM gives sales teams one system to trust instead of several spreadsheets to reconcile by hand. Reps get a pipeline dense enough for daily triage without losing legibility; managers get a forecast built from the same numbers reps already see, not a separate estimate assembled after the fact. The integration layer — with explicit field-type conflict resolution rather than a silent best-guess — signals a platform built to sit inside a company\'s existing stack, not replace it overnight.',
+        ],
+      },
+    ],
+  },
 ]
 
 export function getProject(slug: string): Project | undefined {
