@@ -355,7 +355,7 @@ export const projects: Project[] = [
     tags: ['Sales Ops', 'Enterprise SaaS', 'Workflow Automation'],
     description:
       'Sales operations platform for mid-market B2B teams — pipeline, outreach, and forecasting unified under one locked dataset, so a weighted pipeline number means the same thing on the board and in the quarterly forecast.',
-    cover: '/cases/NexusCRM/Main image (1st).png',
+    cover: '/cases/NexusCRM/cover.png',
     metaDescription:
       'NexusCRM — Sales operations platform for mid-market B2B teams unifying pipeline, outreach, and forecasting. Case study by Roman Ovcharenko.',
     images: Array.from({ length: 6 }, (_, i) => ({
