@@ -386,6 +386,43 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    slug: 'pulseops',
+    title: 'PulseOps',
+    tags: ['DevOps', 'SaaS', 'Real-Time Monitoring'],
+    description:
+      'Infrastructure monitoring and incident response for DevOps teams — health, alerting, logs, incidents, deployments, and on-call coverage unified into one operational record instead of six disconnected tools.',
+    cover: '/cases/PulseOps/cover.png',
+    metaDescription:
+      'PulseOps — Infrastructure monitoring and incident response platform for DevOps teams. Health, alerting, incidents, deployments, and on-call coverage as one connected system. Case study by Roman Ovcharenko.',
+    images: Array.from({ length: 7 }, (_, i) => ({
+      src: `/cases/PulseOps/${String(i + 1).padStart(2, '0')}.png`,
+      alt: `PulseOps — slide ${i + 1}`,
+    })),
+    sections: [
+      {
+        label: 'About Project',
+        paragraphs: [
+          'PulseOps helps on-call engineers monitor infrastructure health, configure alerting, and resolve incidents across a multi-cluster environment. The core challenge wasn\'t visual complexity — it was making six previously separate surfaces (health, alerting, logs, incidents, deployments, on-call coverage) behave like one operational record instead of six disconnected tools.',
+        ],
+      },
+      {
+        label: 'My Role & Activities',
+        list: [
+          'Competitive Analysis & Benchmarking — benchmarked Datadog, Grafana, and PagerDuty to understand where their information architectures converge by convention versus by necessity, which informed treating dark mode as a functional choice for extended monitoring sessions and avoiding an interaction pattern already used elsewhere in this portfolio',
+          'Entity Modeling & Information Architecture — the highest-risk decision was locking a Cluster → Service → Instance model before any screen work began, then mapping explicit relationships across surfaces (which alert triggered which incident, which deployment is a suspected cause, who\'s currently responding); that single decision is what lets the product read as one connected system rather than six independent views',
+          'Designing for Data Density & Progressive Disclosure — with 21 service instances across four environments, I used layered disclosure throughout: aggregated rows that expand into per-cluster detail, a persistent incident panel that stays visible even in a healthy state, and a log stream built around a live/paused distinction so engineers can freeze context without losing the feed',
+          'State & Escalation Design — designed explicit coverage-gap visualization into the rotation calendar, a multi-step escalation path from chat to phone to SMS, and a rollback flow that requires confirmation before an irreversible action — each traceable to a real incident scenario the product needed to explain',
+        ],
+      },
+      {
+        label: 'Outcome',
+        paragraphs: [
+          'The result is a product where a coverage gap visibly explains an unanswered incident, where a deployment\'s config change can be the answer to a regression three screens away, and where an engineer can move from alert to root cause to resolution without losing the thread — a reusable pattern for cross-screen consistency that\'s easy to promise and difficult to actually design.',
+        ],
+      },
+    ],
+  },
 ]
 
 export function getProject(slug: string): Project | undefined {
