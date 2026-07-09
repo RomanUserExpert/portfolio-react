@@ -391,7 +391,7 @@ export const projects: Project[] = [
     title: 'PulseOps',
     tags: ['DevOps', 'SaaS', 'Real-Time Monitoring'],
     description:
-      'Infrastructure monitoring and incident response for DevOps teams — health, alerting, logs, incidents, deployments, and on-call coverage unified into one operational record instead of six disconnected tools.',
+      'Infrastructure monitoring and incident response for DevOps teams — health, alerting, logs, incidents, deployments, and on-call coverage unified into one operational record instead of a set of disconnected tools bolted together.',
     cover: '/cases/PulseOps/cover.png',
     metaDescription:
       'PulseOps — Infrastructure monitoring and incident response platform for DevOps teams. Health, alerting, incidents, deployments, and on-call coverage as one connected system. Case study by Roman Ovcharenko.',
@@ -403,14 +403,14 @@ export const projects: Project[] = [
       {
         label: 'About Project',
         paragraphs: [
-          'PulseOps helps on-call engineers monitor infrastructure health, configure alerting, and resolve incidents across a multi-cluster environment. The core challenge wasn\'t visual complexity — it was making six previously separate surfaces (health, alerting, logs, incidents, deployments, on-call coverage) behave like one operational record instead of six disconnected tools.',
+          'PulseOps helps on-call engineers monitor infrastructure health, configure alerting, and resolve incidents across a multi-cluster environment. The core challenge wasn\'t visual complexity — it was making health, alerting, logs, incidents, deployments, and on-call coverage behave like one operational record instead of a set of disconnected tools bolted together.',
         ],
       },
       {
         label: 'My Role & Activities',
         list: [
           'Competitive Analysis & Benchmarking — benchmarked Datadog, Grafana, and PagerDuty to understand where their information architectures converge by convention versus by necessity, which informed treating dark mode as a functional choice for extended monitoring sessions and avoiding an interaction pattern already used elsewhere in this portfolio',
-          'Entity Modeling & Information Architecture — the highest-risk decision was locking a Cluster → Service → Instance model before any screen work began, then mapping explicit relationships across surfaces (which alert triggered which incident, which deployment is a suspected cause, who\'s currently responding); that single decision is what lets the product read as one connected system rather than six independent views',
+          'Entity Modeling & Information Architecture — the highest-risk decision was locking a Cluster → Service → Instance model before any screen work began, then mapping explicit relationships across the product (which alert triggered which incident, which deployment is a suspected cause, who\'s currently responding); that single decision is what lets the product read as one connected system rather than a collection of disconnected views',
           'Designing for Data Density & Progressive Disclosure — with 21 service instances across four environments, I used layered disclosure throughout: aggregated rows that expand into per-cluster detail, a persistent incident panel that stays visible even in a healthy state, and a log stream built around a live/paused distinction so engineers can freeze context without losing the feed',
           'State & Escalation Design — designed explicit coverage-gap visualization into the rotation calendar, a multi-step escalation path from chat to phone to SMS, and a rollback flow that requires confirmation before an irreversible action — each traceable to a real incident scenario the product needed to explain',
         ],

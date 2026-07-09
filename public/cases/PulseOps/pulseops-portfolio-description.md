@@ -6,7 +6,7 @@
 
 ## PulseOps — Infrastructure monitoring and incident response for DevOps teams
 
-PulseOps helps on-call engineers monitor infrastructure health, configure alerting, and resolve incidents across a multi-cluster environment. The core challenge wasn't visual complexity — it was making six previously separate surfaces (health, alerting, logs, incidents, deployments, on-call coverage) behave like one operational record instead of six disconnected tools.
+PulseOps helps on-call engineers monitor infrastructure health, configure alerting, and resolve incidents across a multi-cluster environment. The core challenge wasn't visual complexity — it was making health, alerting, logs, incidents, deployments, and on-call coverage behave like one operational record instead of a set of disconnected tools bolted together.
 
 ---
 
@@ -16,7 +16,7 @@ PulseOps helps on-call engineers monitor infrastructure health, configure alerti
 I benchmarked Datadog, Grafana, and PagerDuty to understand where their information architectures converge by convention versus by necessity. This informed treating dark mode as a functional choice for extended monitoring sessions rather than a stylistic default, and avoiding an interaction pattern already used elsewhere in this portfolio.
 
 **Entity Modeling & Information Architecture**
-The highest-risk decision was locking a Cluster → Service → Instance model before any screen work began, then mapping explicit relationships across surfaces — which alert triggered which incident, which deployment is a suspected cause, who's currently responding. That single decision is what lets the product read as one connected system rather than six independent views.
+The highest-risk decision was locking a Cluster → Service → Instance model before any screen work began, then mapping explicit relationships across the product — which alert triggered which incident, which deployment is a suspected cause, who's currently responding. That single decision is what lets the product read as one connected system rather than a collection of disconnected views.
 
 **Designing for Data Density & Progressive Disclosure**
 With 21 service instances across four environments, I used layered disclosure throughout: aggregated rows that expand into per-cluster detail, a persistent incident panel that stays visible even in a healthy state, and a log stream built around a live/paused distinction so engineers can freeze context without losing the feed.
