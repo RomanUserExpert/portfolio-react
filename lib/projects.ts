@@ -395,10 +395,13 @@ export const projects: Project[] = [
     cover: '/cases/Clinova/cover.png',
     metaDescription:
       'Clinova — Electronic data capture (EDC) platform for clinical trials. Regulated workflows, audit trails, and data-density design for clinical data managers. Case study by Roman Ovcharenko.',
-    images: Array.from({ length: 8 }, (_, i) => ({
-      src: `/cases/Clinova/${String(i + 1).padStart(2, '0')}.png`,
-      alt: `Clinova — slide ${i + 1}`,
-    })),
+    images: [
+      ...Array.from({ length: 7 }, (_, i) => ({
+        src: `/cases/Clinova/${String(i + 1).padStart(2, '0')}.png`,
+        alt: `Clinova — slide ${i + 1}`,
+      })),
+      { src: '/cases/Clinova/08-new.png', alt: 'Clinova — slide 8' },
+    ],
     sections: [
       {
         label: 'About Project',
