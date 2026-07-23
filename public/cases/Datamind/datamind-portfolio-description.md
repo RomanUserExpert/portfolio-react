@@ -4,7 +4,7 @@
 
 ---
 
-## DataMind — observability and evaluation platform for teams running LLM applications in production
+## DataMind - observability and evaluation platform for teams running LLM applications in production
 
 Teams shipping LLM features operate without the instrumentation they'd demand anywhere else in their stack. A prompt change can lift average quality while quietly wrecking one narrow class of user question, and nobody notices until support tickets accumulate. DataMind exists for the engineers who have to catch that, which made the hard part of this project credibility rather than density: the people who'd judge the interface write evaluation harnesses for a living and spot a wrong abstraction in about five seconds.
 
