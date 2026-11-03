@@ -37,7 +37,7 @@ const byPath = new Map(prim.map((t) => [t.path, t]))
 const refPath = (v) => (typeof v === 'string' && /^\{.+\}$/.test(v) ? v.slice(1, -1).replace(/\./g, '/') : null)
 
 /* Which primitives exist in Figma. Skipped: line-height, letter-spacing (text style literals), breakpoint, motion, z-index. */
-const inFigma = (t) => Boolean(t.collection) && (/^(color|space|radius|size)\//.test(t.path) || /^font\/(family|weight|size)\//.test(t.path))
+const inFigma = (t) => Boolean(t.collection) && (/^(color|space|radius|size|focus-ring)\//.test(t.path) || /^font\/(family|weight|size)\//.test(t.path))
 
 const toPx = (d) => (d.unit === 'rem' ? d.value * 16 : d.value)
 function literal(t) {

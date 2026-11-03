@@ -77,6 +77,16 @@ a {
 }
 
 /* ═══════════════════════════════════
+   FOCUS
+   Keyboard focus only (:focus-visible), same ring on every interactive element.
+   The outline follows border-radius, so it stays concentric with the control.
+═══════════════════════════════════ */
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ═══════════════════════════════════
    RESPONSIVE
    Breakpoints mirror breakpoint/md (768) and breakpoint/sm (480).
    Layout tokens switch inside tokens.css.

@@ -199,5 +199,29 @@
         "unit": "px"
       }
     }
+  },
+  "focus-ring": {
+    "$type": "dimension",
+    "$description": "Keyboard focus indicator (:focus-visible): outline width and gap to the element",
+    "$extensions": {
+      "com.figma": {
+        "scopes": [
+          "STROKE_FLOAT",
+          "GAP"
+        ]
+      }
+    },
+    "width": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "offset": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    }
   }
 }

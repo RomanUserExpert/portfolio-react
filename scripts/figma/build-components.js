@@ -24,16 +24,28 @@ const STATES = [{ state: 'default' }, { state: 'hover' }]
 
 /* ───────── Button ───────── */
 let row = await section('Button', 'components/ui/Button.tsx · variant: primary | ghost')
-const button = await variants(row, 'Button', both([{ variant: 'primary' }, { variant: 'ghost' }], STATES), async ({ variant, state }) => {
+const BUTTON_STATES = ['default', 'hover', 'focus', 'active'].map((state) => ({ state }))
+const button = await variants(row, 'Button', both([{ variant: 'primary' }, { variant: 'ghost' }], BUTTON_STATES), async ({ variant, state }) => {
   const c = box(null, { component: true, dir: 'HORIZONTAL', align: 'CENTER', justify: 'CENTER', pad: ['space/10', 'space/24'], radius: 'radius/sm' })
-  const hov = state === 'hover'
+  const hov = state === 'hover', act = state === 'active'
   if (variant === 'primary') {
-    fill(c, hov ? 'color/bg/accent-hover' : 'color/bg/accent')
-    stroke(c, hov ? 'color/bg/accent-hover' : 'color/bg/accent')
+    const bg = act ? 'color/bg/accent-active' : hov ? 'color/bg/accent-hover' : 'color/bg/accent'
+    fill(c, bg); stroke(c, bg)
     await text(c, 'View Work', 'Label/MD', 'color/fg/on-accent', { name: 'label' })
   } else {
-    stroke(c, hov ? 'color/border/accent' : 'color/border/default')
+    if (act) fill(c, 'color/bg/subtle')
+    stroke(c, hov || act ? 'color/border/accent' : 'color/border/default')
     await text(c, 'View Work', 'Label/MD', 'color/fg/accent-brand', { name: 'label' })
+  }
+  if (state === 'focus') {
+    // CSS: outline focus-ring/width at focus-ring/offset; outline follows the 4px radius → outer radius 8
+    const ring = figma.createFrame(); ring.name = 'focus-ring'
+    c.appendChild(ring); ring.layoutPositioning = 'ABSOLUTE'
+    const out = 4 // offset 2 + width 2
+    ring.resize(c.width + out * 2, c.height + out * 2); ring.x = -out; ring.y = -out
+    ring.constraints = { horizontal: 'STRETCH', vertical: 'STRETCH' }
+    ring.fills = []; stroke(ring, 'color/border/focus', 2, 'INSIDE'); radius(ring, 'radius/md')
+    try { bind(ring, 'strokeWeight', 'focus-ring/width') } catch (e) { /* strokeWeight not bindable here: literal 2 stays */ }
   }
   return c
 })

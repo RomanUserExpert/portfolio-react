@@ -81,6 +81,8 @@ const PAIRS = [
   { fg: 'color-fg-accent', bg: 'color-bg-default', wcag: 4.5 },
   { fg: 'color-fg-on-accent', bg: 'color-bg-accent', apca: 75, accepted: '2026-11-03: brand orange buttons kept as on prod (portfolio site)' },
   { fg: 'color-fg-on-accent', bg: 'color-bg-accent-hover', apca: 75 },
+  { fg: 'color-fg-on-accent', bg: 'color-bg-accent-active', wcag: 4.5 },
+  { fg: 'color-border-focus', bg: 'color-bg-default', wcag: 3 }, // non-text: focus indicator
   { fg: 'color-fg-accent-brand', bg: 'color-bg-default', apca: 75, accepted: '2026-11-03: brand orange button labels kept as on prod (portfolio site)' },
 ]
 const channels = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)

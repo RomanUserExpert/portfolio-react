@@ -164,7 +164,19 @@
           ],
           "hex": "#c05103"
         },
-        "$description": "AA orange for normal-size text: 4.5:1 on neutral/50, 4.75:1 under white text. Button hover"
+        "$description": "AA orange for normal-size text: 4.5:1 on neutral/50, 4.75:1 under white text. Button hover, focus ring (light)"
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6392,
+            0.2667,
+            0.0078
+          ],
+          "hex": "#a34402"
+        },
+        "$description": "Pressed (active) fill: 6.2:1 under white text"
       }
     },
     "white": {

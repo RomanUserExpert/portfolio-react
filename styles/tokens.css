@@ -16,7 +16,8 @@
   --color-neutral-900: #161614;
   --color-neutral-950: #0d0d0d;
   --color-orange-500: #e05f03; /** Brand orange: button fill and button text, graphics. 3.4:1 on neutral/50 (buttons are an accepted exception) */
-  --color-orange-600: #c05103; /** AA orange for normal-size text: 4.5:1 on neutral/50, 4.75:1 under white text. Button hover */
+  --color-orange-600: #c05103; /** AA orange for normal-size text: 4.5:1 on neutral/50, 4.75:1 under white text. Button hover, focus ring (light) */
+  --color-orange-700: #a34402; /** Pressed (active) fill: 6.2:1 under white text */
   --color-white: #ffffff;
   --color-black: #000000;
   --color-alpha-black-8: rgba(0, 0, 0, 0.08);
@@ -54,6 +55,8 @@
   --size-dot: 6px; /** Carousel indicators, Contact separator */
   --breakpoint-md: 768px;
   --breakpoint-sm: 480px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
   --duration-fast: 0.18s;
   --duration-moderate: 0.25s;
   --duration-slow: 0.4s;
@@ -95,6 +98,7 @@
   --color-bg-subtle-hover: var(--color-neutral-150);
   --color-bg-accent: var(--color-orange-500); /** Filled accent controls (primary button); pairs with fg/on-accent. Accepted contrast exception 2026-11-03 */
   --color-bg-accent-hover: var(--color-orange-600);
+  --color-bg-accent-active: var(--color-orange-700); /** Pressed primary button */
   --color-fg-default: var(--color-neutral-950); /** Primary text */
   --color-fg-secondary: var(--color-neutral-700); /** Text on bg/subtle (tags) */
   --color-fg-muted: var(--color-neutral-600); /** Body copy, secondary labels */
@@ -104,6 +108,7 @@
   --color-border-default: var(--color-neutral-200);
   --color-border-strong: var(--color-neutral-600); /** Hovered and emphasized borders */
   --color-border-accent: var(--color-orange-500); /** Accent outlines and underlines (non-text, 3:1) */
+  --color-border-focus: var(--color-orange-600); /** Focus ring (:focus-visible). ≥3:1 against bg/default (WCAG 2.2 focus appearance) */
   --color-icon-accent: var(--color-orange-500); /** Logo mark, separators */
   --color-icon-subtle: var(--color-neutral-200); /** Inactive indicators, list markers */
   --color-shadow-default: var(--color-alpha-black-8);
@@ -127,6 +132,7 @@
   --color-bg-subtle-hover: var(--color-neutral-800);
   --color-bg-accent: var(--color-orange-500); /** Filled accent controls (primary button); pairs with fg/on-accent. Accepted contrast exception 2026-11-03 */
   --color-bg-accent-hover: var(--color-orange-600);
+  --color-bg-accent-active: var(--color-orange-700); /** Pressed primary button */
   --color-fg-default: var(--color-neutral-100); /** Primary text */
   --color-fg-secondary: var(--color-neutral-400); /** Text on bg/subtle (tags) */
   --color-fg-muted: var(--color-neutral-500); /** Body copy, secondary labels */
@@ -136,6 +142,7 @@
   --color-border-default: var(--color-neutral-600);
   --color-border-strong: var(--color-neutral-500); /** Hovered and emphasized borders */
   --color-border-accent: var(--color-orange-500); /** Accent outlines and underlines (non-text, 3:1) */
+  --color-border-focus: var(--color-orange-500); /** Focus ring (:focus-visible). ≥3:1 against bg/default (WCAG 2.2 focus appearance) */
   --color-icon-accent: var(--color-orange-500); /** Logo mark, separators */
   --color-icon-subtle: var(--color-neutral-600); /** Inactive indicators, list markers */
   --color-shadow-default: var(--color-alpha-black-8);

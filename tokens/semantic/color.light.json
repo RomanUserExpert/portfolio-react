@@ -27,6 +27,10 @@
       },
       "accent-hover": {
         "$value": "{color.orange.600}"
+      },
+      "accent-active": {
+        "$value": "{color.orange.700}",
+        "$description": "Pressed primary button"
       }
     },
     "fg": {
@@ -80,6 +84,10 @@
       "accent": {
         "$value": "{color.orange.500}",
         "$description": "Accent outlines and underlines (non-text, 3:1)"
+      },
+      "focus": {
+        "$value": "{color.orange.600}",
+        "$description": "Focus ring (:focus-visible). ≥3:1 against bg/default (WCAG 2.2 focus appearance)"
       }
     },
     "icon": {
