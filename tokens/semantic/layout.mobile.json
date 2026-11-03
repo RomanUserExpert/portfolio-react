@@ -2,6 +2,14 @@
   "layout": {
     "$type": "dimension",
     "$description": "Overrides for the mobile breakpoint; other layout tokens inherit from layout.json",
+    "$extensions": {
+      "com.figma": {
+        "scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
     "page-pad": {
       "$value": "{space.16}"
     },
@@ -9,8 +17,11 @@
       "$value": "{space.40}"
     },
     "hero-font-size": {
-      "$value": "{font.size.display-md}",
-      "$description": "Figma only: static stand-in for the fluid h1 (CSS uses clamp)",
+      "$value": {
+        "value": 2.9375,
+        "unit": "rem"
+      },
+      "$description": "Figma only: fluid h1 clamp(display-md, 12vw, display-xl) evaluated at a 390px viewport ≈ 47px",
       "$extensions": {
         "tech.r-o-design.figma-only": true,
         "com.figma": {

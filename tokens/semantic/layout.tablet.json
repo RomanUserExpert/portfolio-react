@@ -2,6 +2,14 @@
   "layout": {
     "$type": "dimension",
     "$description": "Overrides for the tablet breakpoint; other layout tokens inherit from layout.json",
+    "$extensions": {
+      "com.figma": {
+        "scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
     "page-pad": {
       "$value": "{space.20}"
     },

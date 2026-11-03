@@ -44,3 +44,6 @@ next-env.d.ts
 
 # local plans (not for repo)
 *.local.md
+
+# generated Figma sync spec
+.figma-spec.json

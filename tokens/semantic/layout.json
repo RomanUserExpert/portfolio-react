@@ -2,6 +2,14 @@
   "layout": {
     "$type": "dimension",
     "$description": "Desktop. layout.tablet.json / layout.mobile.json override part of it; Figma modes get the merged set",
+    "$extensions": {
+      "com.figma": {
+        "scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
     "max-width": {
       "$value": {
         "value": 960,

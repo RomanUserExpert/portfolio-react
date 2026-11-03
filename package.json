@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "tokens": "node scripts/build-tokens.mjs",
-    "prebuild": "npm run tokens"
+    "prebuild": "npm run tokens",
+    "figma:spec": "node scripts/figma/tokens-spec.mjs > .figma-spec.json"
   },
   "dependencies": {
     "next": "16.2.6",
