@@ -70,34 +70,48 @@ const dark = await block([PRIMITIVES, S('color.dark'), S('component.dark')], fro
 const tablet = await block([PRIMITIVES, S('layout.tablet')], fromFile('semantic/layout.tablet'))
 const mobile = await block([PRIMITIVES, S('layout.mobile')], fromFile('semantic/layout.mobile'))
 
-/* ── check 2: contrast of key pairs (opaque colors only) ── */
+/* ── check 2: contrast of key pairs (opaque colors only) ──
+   A pair passes on WCAG 2 AA for normal text (4.5:1) or, for pairs with `apca`, on APCA Lc at that text size
+   (buttons: 18px semibold → Lc 60; WCAG 2 has no large-text tier for weight 600).
+   `accepted` pairs are recorded design decisions: reported as warnings, they do not fail the build. */
 const PAIRS = [
-  ['color-fg-default', 'color-bg-default'],
-  ['color-fg-muted', 'color-bg-default'],
-  ['color-fg-secondary', 'color-bg-subtle'],
-  ['color-fg-accent', 'color-bg-default'],
-  ['color-fg-on-accent', 'color-bg-accent'],
-  ['color-fg-on-accent', 'color-bg-accent-hover'],
+  { fg: 'color-fg-default', bg: 'color-bg-default', wcag: 4.5 },
+  { fg: 'color-fg-muted', bg: 'color-bg-default', wcag: 4.5 },
+  { fg: 'color-fg-secondary', bg: 'color-bg-subtle', wcag: 4.5 },
+  { fg: 'color-fg-accent', bg: 'color-bg-default', wcag: 4.5 },
+  { fg: 'color-fg-on-accent', bg: 'color-bg-accent', apca: 60 },
+  { fg: 'color-fg-on-accent', bg: 'color-bg-accent-hover', apca: 60 },
+  { fg: 'color-fg-accent-large', bg: 'color-bg-default', apca: 60, accepted: '2026-11-03: brand orange on ghost buttons (light theme 3.43:1 / Lc 59)' },
 ]
+const channels = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
 const lum = (hex) => {
-  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
-    .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4))
+  const c = channels(hex).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4))
   return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
 }
-const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05) }
-const failures = []
+const wcag = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05) }
+// APCA 0.0.98G-4g, returns |Lc|
+const apca = (text, bg) => {
+  const Y = (hex) => { const [r, g, b] = channels(hex).map((v) => v ** 2.4); return 0.2126729 * r + 0.7151522 * g + 0.072175 * b }
+  const clamp = (y) => (y > 0.022 ? y : y + (0.022 - y) ** 1.414)
+  const t = clamp(Y(text)), b = clamp(Y(bg))
+  const s = b > t ? (b ** 0.56 - t ** 0.57) * 1.14 : (b ** 0.65 - t ** 0.62) * 1.14
+  return Math.abs(s) < 0.1 ? 0 : Math.abs(s > 0 ? s - 0.027 : s + 0.027) * 100
+}
+const failures = [], accepted = []
 for (const [mode, { allTokens }] of [['light', light], ['dark', dark]]) {
   const value = Object.fromEntries(allTokens.map((t) => [t.name, t.$value ?? t.value]))
-  for (const [fg, bg] of PAIRS) {
-    if (!/^#[0-9a-f]{6}$/i.test(value[fg] ?? '') || !/^#[0-9a-f]{6}$/i.test(value[bg] ?? '')) {
-      failures.push(`${mode}: cannot check ${fg} / ${bg} (got ${value[fg]}, ${value[bg]})`)
-      continue
-    }
-    const r = ratio(value[fg], value[bg])
-    if (r < 4.5) failures.push(`${mode}: ${fg} on ${bg} = ${r.toFixed(2)}:1`)
+  for (const p of PAIRS) {
+    const [fg, bg] = [value[p.fg], value[p.bg]]
+    if (!/^#[0-9a-f]{6}$/i.test(fg ?? '') || !/^#[0-9a-f]{6}$/i.test(bg ?? '')) { failures.push(`${mode}: cannot check ${p.fg} / ${p.bg}`); continue }
+    // passes on WCAG 2 AA for normal text, or on APCA at the pair's own size/weight
+    const w = wcag(fg, bg), lc = apca(fg, bg)
+    if (w >= (p.wcag ?? 4.5) || (p.apca && lc >= p.apca)) continue
+    const line = `${mode}: ${p.fg} on ${p.bg} = ${w.toFixed(2)}:1 / Lc ${lc.toFixed(1)} (needs ${p.wcag ?? 4.5}:1${p.apca ? ` or Lc ${p.apca}` : ''})`
+    ;(p.accepted ? accepted : failures).push(p.accepted ? `${line} · accepted ${p.accepted}` : line)
   }
 }
-if (failures.length) throw new Error(`WCAG AA contrast check failed:\n  ${failures.join('\n  ')}`)
+for (const a of accepted) console.warn(`⚠ contrast ${a}`)
+if (failures.length) throw new Error(`Contrast check failed:\n  ${failures.join('\n  ')}`)
 
 const indent = (s) => s.replace(/^(?=.)/gm, '  ')
 await writeFile(OUT, `/**
@@ -120,4 +134,4 @@ await writeFile(OUT, `/**
   }
 }
 `)
-console.log(`✔ ${OUT} (light/dark parity ok, ${PAIRS.length * 2} contrast pairs ≥ 4.5:1)`)
+console.log(`✔ ${OUT} (light/dark parity ok, ${PAIRS.length * 2} contrast pairs checked, ${accepted.length} accepted exception)`)

@@ -15,9 +15,8 @@
   --color-neutral-850: #1e1e1c;
   --color-neutral-900: #161614;
   --color-neutral-950: #0d0d0d;
-  --color-orange-500: #e05f03; /** Brand orange. 3.4:1 on neutral/50: graphics and large text only in light theme */
-  --color-orange-600: #c05103; /** Minimum AA orange: 4.5:1 on neutral/50, 4.75:1 under white text */
-  --color-orange-700: #a34402;
+  --color-orange-500: #e05f03; /** Brand orange. Button fill and large accent text (≥18px semibold); graphics. 3.4:1 on neutral/50 */
+  --color-orange-600: #c05103; /** AA orange for normal-size text: 4.5:1 on neutral/50, 4.75:1 under white text. Button hover */
   --color-white: #ffffff;
   --color-black: #000000;
   --color-alpha-black-8: rgba(0, 0, 0, 0.08);
@@ -94,12 +93,13 @@
   --color-bg-default: var(--color-neutral-50); /** Page background */
   --color-bg-subtle: var(--color-neutral-100); /** Cards, tags, image placeholders */
   --color-bg-subtle-hover: var(--color-neutral-150);
-  --color-bg-accent: var(--color-orange-600); /** Filled accent controls (primary button); pairs with fg/on-accent */
-  --color-bg-accent-hover: var(--color-orange-700);
+  --color-bg-accent: var(--color-orange-500); /** Filled accent controls (primary button); pairs with fg/on-accent at ≥18px semibold */
+  --color-bg-accent-hover: var(--color-orange-600);
   --color-fg-default: var(--color-neutral-950); /** Primary text */
   --color-fg-secondary: var(--color-neutral-700); /** Text on bg/subtle (tags) */
   --color-fg-muted: var(--color-neutral-600); /** Body copy, secondary labels */
   --color-fg-accent: var(--color-orange-600); /** Accent text: links, ghost button, email. AA on bg/default */
+  --color-fg-accent-large: var(--color-orange-500); /** Accent text ≥18px semibold only (ghost button label). Design decision 2026-11-03: below WCAG 2 AA on light bg */
   --color-fg-on-accent: var(--color-white); /** Text on bg/accent */
   --color-border-default: var(--color-neutral-200);
   --color-border-strong: var(--color-neutral-600); /** Hovered and emphasized borders */
@@ -125,12 +125,13 @@
   --color-bg-default: var(--color-neutral-900); /** Page background */
   --color-bg-subtle: var(--color-neutral-850); /** Cards, tags, image placeholders */
   --color-bg-subtle-hover: var(--color-neutral-800);
-  --color-bg-accent: var(--color-orange-600); /** Filled accent controls (primary button); pairs with fg/on-accent */
-  --color-bg-accent-hover: var(--color-orange-700);
+  --color-bg-accent: var(--color-orange-500); /** Filled accent controls (primary button); pairs with fg/on-accent at ≥18px semibold */
+  --color-bg-accent-hover: var(--color-orange-600);
   --color-fg-default: var(--color-neutral-100); /** Primary text */
   --color-fg-secondary: var(--color-neutral-400); /** Text on bg/subtle (tags) */
   --color-fg-muted: var(--color-neutral-500); /** Body copy, secondary labels */
   --color-fg-accent: var(--color-orange-500); /** Accent text: links, ghost button, email. AA on bg/default */
+  --color-fg-accent-large: var(--color-orange-500); /** Accent text ≥18px semibold only (ghost button label). Design decision 2026-11-03: below WCAG 2 AA on light bg */
   --color-fg-on-accent: var(--color-white); /** Text on bg/accent */
   --color-border-default: var(--color-neutral-600);
   --color-border-strong: var(--color-neutral-500); /** Hovered and emphasized borders */

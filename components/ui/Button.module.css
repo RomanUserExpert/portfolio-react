@@ -2,10 +2,11 @@
 .ghost {
   display: inline-flex;
   align-items: center;
-  padding: var(--space-10) var(--space-24);
+  padding: var(--space-12) var(--space-32);
   font-family: var(--font-family-body);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-normal);
   border-radius: var(--radius-sm);
   cursor: pointer;
 }
@@ -24,7 +25,7 @@
 
 .ghost {
   background: transparent;
-  color: var(--color-fg-accent);
+  color: var(--color-fg-accent-large);
   border: 1px solid var(--color-border-default);
   transition: color var(--duration-fast), border-color var(--duration-fast);
 }

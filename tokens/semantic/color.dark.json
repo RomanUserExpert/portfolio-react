@@ -22,11 +22,11 @@
         "$value": "{color.neutral.800}"
       },
       "accent": {
-        "$value": "{color.orange.600}",
-        "$description": "Filled accent controls (primary button); pairs with fg/on-accent"
+        "$value": "{color.orange.500}",
+        "$description": "Filled accent controls (primary button); pairs with fg/on-accent at ≥18px semibold"
       },
       "accent-hover": {
-        "$value": "{color.orange.700}"
+        "$value": "{color.orange.600}"
       }
     },
     "fg": {
@@ -52,6 +52,10 @@
       "accent": {
         "$value": "{color.orange.500}",
         "$description": "Accent text: links, ghost button, email. AA on bg/default"
+      },
+      "accent-large": {
+        "$value": "{color.orange.500}",
+        "$description": "Accent text ≥18px semibold only (ghost button label). Design decision 2026-11-03: below WCAG 2 AA on light bg"
       },
       "on-accent": {
         "$value": "{color.white}",

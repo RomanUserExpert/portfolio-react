@@ -152,7 +152,7 @@
           ],
           "hex": "#e05f03"
         },
-        "$description": "Brand orange. 3.4:1 on neutral/50: graphics and large text only in light theme"
+        "$description": "Brand orange. Button fill and large accent text (≥18px semibold); graphics. 3.4:1 on neutral/50"
       },
       "600": {
         "$value": {
@@ -164,18 +164,7 @@
           ],
           "hex": "#c05103"
         },
-        "$description": "Minimum AA orange: 4.5:1 on neutral/50, 4.75:1 under white text"
-      },
-      "700": {
-        "$value": {
-          "colorSpace": "srgb",
-          "components": [
-            0.6392,
-            0.2667,
-            0.0078
-          ],
-          "hex": "#a34402"
-        }
+        "$description": "AA orange for normal-size text: 4.5:1 on neutral/50, 4.75:1 under white text. Button hover"
       }
     },
     "white": {

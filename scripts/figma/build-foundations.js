@@ -36,7 +36,7 @@ async function swatch(parent, name, w = 112, onDark = false) {
 const prim = await section('Primitives · color', 'Raw values. Hidden from pickers in Figma and never used in components: use Semantic.')
 for (const [label, names] of [
   ['Neutral', Object.keys(VARS).filter((n) => n.startsWith('color/neutral/'))],
-  ['Orange & base', ['color/orange/500', 'color/orange/600', 'color/orange/700', 'color/white', 'color/black']],
+  ['Orange & base', ['color/orange/500', 'color/orange/600', 'color/white', 'color/black']],
   ['Alpha', Object.keys(VARS).filter((n) => n.startsWith('color/alpha/'))],
 ]) {
   await text(prim, label, 'Heading/MD')
