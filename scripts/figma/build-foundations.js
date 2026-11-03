@@ -33,7 +33,7 @@ async function swatch(parent, name, w = 112, onDark = false) {
   await text(c, name.replace('color/', ''), 'Label/XS', 'color/fg/default', { fillW: true })
   await text(c, hex(v) + (v.a < 1 ? ` · ${Math.round(v.a * 100)}%` : ''), 'Body/SM', 'color/fg/muted', { fillW: true })
 }
-const prim = await section('Primitives · color', 'Raw values. Hidden from pickers in Figma and never used in components: use Semantic.')
+const prim = await section('Color Primitives', 'Collection «Color Primitives». Raw values, hidden from pickers and never used in components: use Semantic.')
 for (const [label, names] of [
   ['Neutral', Object.keys(VARS).filter((n) => n.startsWith('color/neutral/'))],
   ['Orange & base', ['color/orange/500', 'color/orange/600', 'color/white', 'color/black']],
@@ -86,7 +86,7 @@ for (const m of ['Desktop', 'Tablet', 'Mobile']) {
 }
 
 /* ── Spacing ── */
-const sp = await section('Space', '4px grid with half steps 2, 6, 10. Bound to padding and gap.')
+const sp = await section('Size · space', 'Collection «Size». 4px grid with half steps 2, 6, 10. Bound to padding and gap.')
 for (const n of Object.keys(VARS).filter((x) => x.startsWith('space/'))) {
   const row = box(sp, { name: n, dir: 'HORIZONTAL', gap: 'space/16', align: 'CENTER' })
   await text(row, n, 'Label/XS', 'color/fg/default', { w: 96 })

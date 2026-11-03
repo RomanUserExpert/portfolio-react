@@ -7,7 +7,7 @@ start the bridge, then run the plugin «Figmosha · General» in the Figma file.
 | Script | What it does | Re-runnable |
 |---|---|---|
 | `tokens-spec.mjs` | Node: tokens JSON → flat spec (`npm run figma:spec` → `.figma-spec.json`, gitignored) | yes |
-| `sync-tokens.js` | Figma: creates/updates collections Primitives, Semantic (Light/Dark), Layout (Desktop/Tablet/Mobile), 13 text styles, effect `shadow/raised`. Finds by name, never deletes, reports `stale` | yes, idempotent |
+| `sync-tokens.js` | Figma: creates/updates collections Color Primitives, Size, Typography Primitives (one per `tokens/primitives` file, 1 mode, hidden), Semantic (Light/Dark), Layout (Desktop/Tablet/Mobile), 13 text styles, effect `shadow/raised`. Finds by name, never deletes, reports `stale` | yes, idempotent |
 | `lib.js` | Helpers prepended to every build script: `box`, `text`, `bind`, `fill`, `variants`, `textProp`, `inst`… | — |
 | `build-foundations.js` | Page Foundations: palette, semantic colors in both modes, type, space, radius, size, effect, layout | yes (replaces its frame) |
 | `build-components.js` | Page Components: Button, Tag, SectionLabel, Pill, Link, ThemeToggle, Logo, IconButton, Dot, ProjectCard, ProcessRow, Header, Footer, Carousel, Lightbox | yes, **but** rebuilding gives new component ids: rebuild Blocks and Pages after it |
@@ -39,7 +39,9 @@ Images (project covers, case slide) are uploaded once with `figma.createImage` a
 ## Rules the scripts follow
 
 - No raw hex or sizes where a token exists: fills/strokes bind to Semantic variables, padding/gap/radius/size to
-  Primitives or Layout, text uses text styles (or bound `font/size/*` for one-offs).
-- Components never use Primitives colors directly.
+  Size / Typography Primitives or Layout, text uses text styles (or bound `font/size/*` for one-offs).
+- Components never use Color Primitives directly.
+- Variables cannot move between collections through the API: renaming or splitting a collection means sync (creates the new one and
+  re-points aliases) → remove the old collection → rebuild the pages.
 - Templates pin their modes: `Semantic` Light/Dark, `Layout` Desktop/Mobile. Change the mode on a frame to re-theme.
 - Figma-only token: `layout/hero-font-size` (static stand-in for the fluid h1; not emitted to CSS).

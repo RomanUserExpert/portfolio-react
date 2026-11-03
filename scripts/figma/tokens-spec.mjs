@@ -1,6 +1,7 @@
 // Turns tokens/**/*.json (DTCG 2025.10) into a flat spec for scripts/figma/sync-tokens.js.
 //   node scripts/figma/tokens-spec.mjs > .figma-spec.json
-// Collections:  Primitives (1 mode, hidden from publishing)
+// Collections:  Color Primitives · Size · Typography Primitives   (1 mode each, hidden from publishing;
+//               one per primitives file, so each domain can get its own modes later)
 //               Semantic   (Light / Dark: color.* + component.*)
 //               Layout     (Desktop / Tablet / Mobile: layout.json merged with the override files)
 // Plus text styles (semantic/typography.json) and effect styles (semantic/effect.json).
@@ -22,18 +23,21 @@ function flatten(node, path = [], inherited = {}) {
   return Object.entries(node).flatMap(([k, v]) => (k.startsWith('$') ? [] : flatten(v, [...path, k], here)))
 }
 
-const prim = [
-  ...flatten(await read('primitives/color')),
-  ...flatten(await read('primitives/dimension')),
-  ...flatten(await read('primitives/typography')),
-  ...flatten(await read('primitives/motion')),
-  ...flatten(await read('primitives/z-index')),
+/* primitives file → Figma collection (null: not synced to Figma) */
+const PRIMITIVE_FILES = [
+  ['primitives/color', 'Color Primitives'],
+  ['primitives/dimension', 'Size'],
+  ['primitives/typography', 'Typography Primitives'],
+  ['primitives/motion', null],
+  ['primitives/z-index', null],
 ]
+const prim = []
+for (const [file, collection] of PRIMITIVE_FILES) for (const t of flatten(await read(file))) prim.push({ ...t, collection })
 const byPath = new Map(prim.map((t) => [t.path, t]))
 const refPath = (v) => (typeof v === 'string' && /^\{.+\}$/.test(v) ? v.slice(1, -1).replace(/\./g, '/') : null)
 
 /* Which primitives exist in Figma. Skipped: line-height, letter-spacing (text style literals), breakpoint, motion, z-index. */
-const inFigma = (t) => /^(color|space|radius|size)\//.test(t.path) || /^font\/(family|weight|size)\//.test(t.path)
+const inFigma = (t) => Boolean(t.collection) && (/^(color|space|radius|size)\//.test(t.path) || /^font\/(family|weight|size)\//.test(t.path))
 
 const toPx = (d) => (d.unit === 'rem' ? d.value * 16 : d.value)
 function literal(t) {
@@ -53,15 +57,18 @@ const css = (path) => `var(--${path.replace(/\//g, '-')})`
 const collections = []
 const where = new Map() // token path → collection name
 
-/* Primitives */
-const primVars = prim.filter(inFigma).map((t) => {
-  const l = literal(t)
-  where.set(t.path, 'Primitives')
-  return { name: t.path, type: l.kind, values: { Value: l.value }, scopes: t.scopes ?? [], hidden: true, code: css(t.path), description: t.description }
-})
-collections.push({ name: 'Primitives', modes: ['Value'], vars: primVars })
+/* Primitive collections, in file order */
+for (const [, name] of PRIMITIVE_FILES) {
+  if (!name) continue
+  const vars = prim.filter((t) => t.collection === name && inFigma(t)).map((t) => {
+    const l = literal(t)
+    where.set(t.path, name)
+    return { name: t.path, type: l.kind, values: { Value: l.value }, scopes: t.scopes ?? [], hidden: true, code: css(t.path), description: t.description }
+  })
+  collections.push({ name, modes: ['Value'], vars })
+}
 
-/* Moded collections: values are aliases into Primitives (or literals when not a reference). */
+/* Moded collections: values are aliases into the primitive collections (or literals when not a reference). */
 function moded(name, modes, trees) {
   const perMode = Object.fromEntries(modes.map((m, i) => [m, new Map(flatten(trees[i]).map((t) => [t.path, t]))]))
   const first = perMode[modes[0]]
@@ -75,7 +82,7 @@ function moded(name, modes, trees) {
         const target = byPath.get(ref)
         if (!target || !inFigma(target)) throw new Error(`${name}/${t.path} → {${ref}} is not a Figma primitive`)
         kind = literal(target).kind
-        values[m] = { alias: ref, collection: 'Primitives' }
+        values[m] = { alias: ref, collection: target.collection }
       } else {
         const l = literal({ ...tm, type: t.type })
         kind = l.kind
