@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Figma plugin snippets: concatenated with lib.js and run inside Figma by scripts/figma/run.sh
     "scripts/figma/*.js",
+    // Storybook build output
+    "storybook-static/**",
   ]),
 ]);
 
