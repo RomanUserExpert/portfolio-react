@@ -131,19 +131,6 @@
       }
     },
     "label": {
-      "lg": {
-        "$value": {
-          "fontFamily": "{font.family.body}",
-          "fontWeight": "{font.weight.semibold}",
-          "fontSize": "{font.size.2xl}",
-          "lineHeight": "{font.line-height.normal}",
-          "letterSpacing": {
-            "value": 0,
-            "unit": "px"
-          }
-        },
-        "$description": "Buttons"
-      },
       "md": {
         "$value": {
           "fontFamily": "{font.family.body}",
@@ -155,7 +142,7 @@
             "unit": "px"
           }
         },
-        "$description": "Compact labels"
+        "$description": "Buttons"
       },
       "xs": {
         "$value": {

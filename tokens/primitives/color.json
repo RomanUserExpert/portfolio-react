@@ -152,7 +152,7 @@
           ],
           "hex": "#e05f03"
         },
-        "$description": "Brand orange. Button fill and large accent text (≥18px semibold); graphics. 3.4:1 on neutral/50"
+        "$description": "Brand orange: button fill and button text, graphics. 3.4:1 on neutral/50 (buttons are an accepted exception)"
       },
       "600": {
         "$value": {

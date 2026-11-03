@@ -23,7 +23,7 @@
       },
       "accent": {
         "$value": "{color.orange.500}",
-        "$description": "Filled accent controls (primary button); pairs with fg/on-accent at ≥18px semibold"
+        "$description": "Filled accent controls (primary button); pairs with fg/on-accent. Accepted contrast exception 2026-11-03"
       },
       "accent-hover": {
         "$value": "{color.orange.600}"
@@ -53,9 +53,9 @@
         "$value": "{color.orange.600}",
         "$description": "Accent text: links, ghost button, email. AA on bg/default"
       },
-      "accent-large": {
+      "accent-brand": {
         "$value": "{color.orange.500}",
-        "$description": "Accent text ≥18px semibold only (ghost button label). Design decision 2026-11-03: below WCAG 2 AA on light bg"
+        "$description": "Brand orange text, buttons only (ghost label, CV link). Accepted contrast exception 2026-11-03"
       },
       "on-accent": {
         "$value": "{color.white}",

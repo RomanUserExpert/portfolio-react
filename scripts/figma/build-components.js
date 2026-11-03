@@ -25,15 +25,15 @@ const STATES = [{ state: 'default' }, { state: 'hover' }]
 /* ───────── Button ───────── */
 let row = await section('Button', 'components/ui/Button.tsx · variant: primary | ghost')
 const button = await variants(row, 'Button', both([{ variant: 'primary' }, { variant: 'ghost' }], STATES), async ({ variant, state }) => {
-  const c = box(null, { component: true, dir: 'HORIZONTAL', align: 'CENTER', justify: 'CENTER', pad: ['space/12', 'space/32'], radius: 'radius/sm' })
+  const c = box(null, { component: true, dir: 'HORIZONTAL', align: 'CENTER', justify: 'CENTER', pad: ['space/10', 'space/24'], radius: 'radius/sm' })
   const hov = state === 'hover'
   if (variant === 'primary') {
     fill(c, hov ? 'color/bg/accent-hover' : 'color/bg/accent')
     stroke(c, hov ? 'color/bg/accent-hover' : 'color/bg/accent')
-    await text(c, 'View Work', 'Label/LG', 'color/fg/on-accent', { name: 'label' })
+    await text(c, 'View Work', 'Label/MD', 'color/fg/on-accent', { name: 'label' })
   } else {
     stroke(c, hov ? 'color/border/accent' : 'color/border/default')
-    await text(c, 'View Work', 'Label/LG', 'color/fg/accent-large', { name: 'label' })
+    await text(c, 'View Work', 'Label/MD', 'color/fg/accent-brand', { name: 'label' })
   }
   return c
 })

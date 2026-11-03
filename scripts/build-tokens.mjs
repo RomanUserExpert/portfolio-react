@@ -72,16 +72,16 @@ const mobile = await block([PRIMITIVES, S('layout.mobile')], fromFile('semantic/
 
 /* ── check 2: contrast of key pairs (opaque colors only) ──
    A pair passes on WCAG 2 AA for normal text (4.5:1) or, for pairs with `apca`, on APCA Lc at that text size
-   (buttons: 18px semibold → Lc 60; WCAG 2 has no large-text tier for weight 600).
+   (buttons: 14px medium → Lc 75).
    `accepted` pairs are recorded design decisions: reported as warnings, they do not fail the build. */
 const PAIRS = [
   { fg: 'color-fg-default', bg: 'color-bg-default', wcag: 4.5 },
   { fg: 'color-fg-muted', bg: 'color-bg-default', wcag: 4.5 },
   { fg: 'color-fg-secondary', bg: 'color-bg-subtle', wcag: 4.5 },
   { fg: 'color-fg-accent', bg: 'color-bg-default', wcag: 4.5 },
-  { fg: 'color-fg-on-accent', bg: 'color-bg-accent', apca: 60 },
-  { fg: 'color-fg-on-accent', bg: 'color-bg-accent-hover', apca: 60 },
-  { fg: 'color-fg-accent-large', bg: 'color-bg-default', apca: 60, accepted: '2026-11-03: brand orange on ghost buttons (light theme 3.43:1 / Lc 59)' },
+  { fg: 'color-fg-on-accent', bg: 'color-bg-accent', apca: 75, accepted: '2026-11-03: brand orange buttons kept as on prod (portfolio site)' },
+  { fg: 'color-fg-on-accent', bg: 'color-bg-accent-hover', apca: 75 },
+  { fg: 'color-fg-accent-brand', bg: 'color-bg-default', apca: 75, accepted: '2026-11-03: brand orange button labels kept as on prod (portfolio site)' },
 ]
 const channels = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
 const lum = (hex) => {
