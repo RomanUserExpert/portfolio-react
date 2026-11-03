@@ -29,6 +29,7 @@ export const All: Story = {
 /** Every CSS state side by side, forced with storybook-addon-pseudo-states. Mirrors Figma Button `state`. */
 export const States: Story = {
   parameters: {
+    controls: { disable: true },
     pseudo: { hover: ['.st-hover > *'], focusVisible: ['.st-focus > *'], active: ['.st-active > *'] },
   },
   render: () => {
