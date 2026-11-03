@@ -47,3 +47,7 @@ next-env.d.ts
 
 # generated Figma sync spec
 .figma-spec.json
+
+# storybook
+storybook-static
+*storybook.log
