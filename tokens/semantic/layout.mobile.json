@@ -1,0 +1,24 @@
+{
+  "layout": {
+    "$type": "dimension",
+    "$description": "Overrides for the mobile breakpoint; other layout tokens inherit from layout.json",
+    "page-pad": {
+      "$value": "{space.16}"
+    },
+    "section-pad": {
+      "$value": "{space.40}"
+    },
+    "hero-font-size": {
+      "$value": "{font.size.display-md}",
+      "$description": "Figma only: static stand-in for the fluid h1 (CSS uses clamp)",
+      "$extensions": {
+        "tech.r-o-design.figma-only": true,
+        "com.figma": {
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        }
+      }
+    }
+  }
+}

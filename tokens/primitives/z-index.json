@@ -1,0 +1,17 @@
+{
+  "z-index": {
+    "$type": "number",
+    "$extensions": {
+      "com.figma": {
+        "scopes": [],
+        "hiddenFromPublishing": true
+      }
+    },
+    "sticky": {
+      "$value": 100
+    },
+    "overlay": {
+      "$value": 1000
+    }
+  }
+}

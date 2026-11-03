@@ -96,7 +96,7 @@ export default function InteractiveGridPattern({
           <path
             d={`M ${squareSize} 0 L 0 0 0 ${squareSize}`}
             fill="none"
-            stroke="var(--grid-line)"
+            stroke="var(--component-grid-line)"
             strokeWidth={1}
           />
         </pattern>
@@ -111,7 +111,7 @@ export default function InteractiveGridPattern({
           y={cell.y}
           width={squareSize - 1}
           height={squareSize - 1}
-          fill="var(--grid-hover)"
+          fill="var(--component-grid-hover)"
           className={styles.trailCell}
           onAnimationEnd={() => removeTrail(cell.id)}
         />
@@ -123,7 +123,7 @@ export default function InteractiveGridPattern({
           y={active.y}
           width={squareSize - 1}
           height={squareSize - 1}
-          fill="var(--grid-active)"
+          fill="var(--component-grid-active)"
         />
       )}
     </svg>

@@ -3,13 +3,13 @@
 }
 
 .title {
-  font-family: var(--font-display);
-  font-size: clamp(3.6rem, 9.9vw, 7.15rem);
-  font-weight: 500;
-  line-height: 0.97;
-  letter-spacing: 0.015em;
-  color: var(--text);
-  margin-bottom: 40px;
+  font-family: var(--font-family-display);
+  font-size: clamp(var(--font-size-display-xl), 9.9vw, var(--font-size-display-2xl));
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-line-height-none);
+  letter-spacing: var(--font-letter-spacing-display);
+  color: var(--color-fg-default);
+  margin-bottom: var(--space-40);
 }
 
 .layout {
@@ -17,17 +17,17 @@
 }
 
 .lead {
-  font-size: 1rem;
-  color: var(--text-muted);
-  line-height: 1.8;
-  margin-bottom: 28px;
+  font-size: var(--font-size-xl);
+  color: var(--color-fg-muted);
+  line-height: var(--font-line-height-loose);
+  margin-bottom: var(--space-24);
 }
 
 .links {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 28px;
+  gap: var(--space-16);
+  margin-bottom: var(--space-24);
 }
 
 .dot {
@@ -36,30 +36,34 @@
   flex-shrink: 0;
 }
 
+.dotFill {
+  fill: var(--color-icon-accent);
+}
+
 .email {
   display: inline-flex;
   align-items: center;
-  font-size: 0.975rem;
-  font-weight: 500;
-  color: var(--accent);
-  padding-bottom: 2px;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-fg-accent);
+  padding-bottom: var(--space-2);
   border-bottom: 1px solid transparent;
-  transition: border-color var(--dur);
+  transition: border-color var(--duration-fast);
 }
 
 .email:hover {
-  border-bottom-color: var(--accent);
+  border-bottom-color: var(--color-border-accent);
 }
 
 @media (max-width: 768px) {
   .title {
-    font-size: clamp(1.94rem, 12vw, 3.6rem);
+    font-size: clamp(var(--font-size-display-md), 12vw, var(--font-size-display-xl));
   }
 
   .links {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: var(--space-10);
   }
 
   .dot {
@@ -67,7 +71,7 @@
   }
 
   .email {
-    font-size: 0.875rem;
+    font-size: var(--font-size-md);
     word-break: break-all;
   }
 }

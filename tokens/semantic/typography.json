@@ -1,0 +1,198 @@
+{
+  "typography": {
+    "$type": "typography",
+    "$description": "Composite text styles for Figma and docs; CSS uses the individual tokens. Real letter-spacing (em) is in $extensions",
+    "display": {
+      "2xl": {
+        "$value": {
+          "fontFamily": "{font.family.display}",
+          "fontWeight": "{font.weight.regular}",
+          "fontSize": "{layout.hero-font-size}",
+          "lineHeight": "{font.line-height.none}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "h1 on home and Contact title; size follows the Layout mode",
+        "$extensions": {
+          "tech.r-o-design.letter-spacing": "{font.letter-spacing.display}"
+        }
+      },
+      "lg": {
+        "$value": {
+          "fontFamily": "{font.family.display}",
+          "fontWeight": "{font.weight.regular}",
+          "fontSize": "{font.size.display-lg}",
+          "lineHeight": "{font.line-height.tight}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Page titles (fluid down to display-sm)",
+        "$extensions": {
+          "tech.r-o-design.letter-spacing": "{font.letter-spacing.display}"
+        }
+      }
+    },
+    "heading": {
+      "lg": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.semibold}",
+          "fontSize": "{font.size.lg}",
+          "lineHeight": "{font.line-height.snug}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Card titles"
+      },
+      "md": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.semibold}",
+          "fontSize": "{font.size.md}",
+          "lineHeight": "{font.line-height.snug}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "h3, Process steps"
+      }
+    },
+    "body": {
+      "2xl": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.regular}",
+          "fontSize": "{font.size.2xl}",
+          "lineHeight": "{font.line-height.relaxed}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Hero description"
+      },
+      "xl": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.regular}",
+          "fontSize": "{font.size.xl}",
+          "lineHeight": "{font.line-height.loose}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Contact lead"
+      },
+      "lg": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.regular}",
+          "fontSize": "{font.size.lg}",
+          "lineHeight": "{font.line-height.loose}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Long-form paragraphs"
+      },
+      "md": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.regular}",
+          "fontSize": "{font.size.md}",
+          "lineHeight": "{font.line-height.relaxed}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      },
+      "sm": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.regular}",
+          "fontSize": "{font.size.sm}",
+          "lineHeight": "{font.line-height.relaxed}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Card descriptions"
+      }
+    },
+    "label": {
+      "md": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.medium}",
+          "fontSize": "{font.size.md}",
+          "lineHeight": "{font.line-height.normal}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Buttons"
+      },
+      "xs": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.medium}",
+          "fontSize": "{font.size.xs}",
+          "lineHeight": "{font.line-height.normal}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Tags"
+      }
+    },
+    "overline": {
+      "lg": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.semibold}",
+          "fontSize": "{font.size.lg}",
+          "lineHeight": "{font.line-height.normal}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Hero role",
+        "$extensions": {
+          "tech.r-o-design.letter-spacing": "{font.letter-spacing.widest}",
+          "tech.r-o-design.text-transform": "uppercase"
+        }
+      },
+      "2xs": {
+        "$value": {
+          "fontFamily": "{font.family.body}",
+          "fontWeight": "{font.weight.semibold}",
+          "fontSize": "{font.size.2xs}",
+          "lineHeight": "{font.line-height.normal}",
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "$description": "Section labels",
+        "$extensions": {
+          "tech.r-o-design.letter-spacing": "{font.letter-spacing.widest}",
+          "tech.r-o-design.text-transform": "uppercase"
+        }
+      }
+    }
+  }
+}

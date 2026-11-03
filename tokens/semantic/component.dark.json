@@ -1,0 +1,55 @@
+{
+  "component": {
+    "$type": "color",
+    "$description": "Component-scoped tokens: only for the named component",
+    "grid": {
+      "$description": "InteractiveGridPattern (Hero)",
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "STROKE_COLOR",
+            "SHAPE_FILL"
+          ]
+        }
+      },
+      "line": {
+        "$value": "{color.alpha.white.16}"
+      },
+      "hover": {
+        "$value": "{color.alpha.orange.32}"
+      },
+      "active": {
+        "$value": "{color.alpha.orange.40}"
+      }
+    },
+    "lightbox": {
+      "$description": "Lightbox: always dark, same in both themes",
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "ALL_FILLS",
+            "STROKE_COLOR"
+          ]
+        }
+      },
+      "scrim": {
+        "$value": "{color.alpha.black.92}"
+      },
+      "control-bg": {
+        "$value": "{color.alpha.white.12}"
+      },
+      "control-bg-hover": {
+        "$value": "{color.alpha.white.20}"
+      },
+      "border": {
+        "$value": "{color.alpha.white.20}"
+      },
+      "fg": {
+        "$value": "{color.white}"
+      },
+      "fg-muted": {
+        "$value": "{color.alpha.white.50}"
+      }
+    }
+  }
+}

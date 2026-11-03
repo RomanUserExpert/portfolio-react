@@ -1,0 +1,198 @@
+{
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "FONT_FAMILY"
+          ]
+        }
+      },
+      "body": {
+        "$value": [
+          "Inter",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "sans-serif"
+        ],
+        "$extensions": {
+          "tech.r-o-design.css": "var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        }
+      },
+      "display": {
+        "$value": [
+          "Special Gothic Expanded One",
+          "Inter",
+          "sans-serif"
+        ],
+        "$description": "Only weight 400 is loaded",
+        "$extensions": {
+          "tech.r-o-design.css": "var(--font-special-gothic), var(--font-family-body)"
+        }
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        }
+      },
+      "regular": {
+        "$value": 400
+      },
+      "medium": {
+        "$value": 500
+      },
+      "semibold": {
+        "$value": 600
+      },
+      "bold": {
+        "$value": 700
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "$description": "rem in code; Figma gets px (× 16)",
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        }
+      },
+      "2xs": {
+        "$value": {
+          "value": 0.6875,
+          "unit": "rem"
+        }
+      },
+      "xs": {
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        }
+      },
+      "sm": {
+        "$value": {
+          "value": 0.8125,
+          "unit": "rem"
+        }
+      },
+      "md": {
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        }
+      },
+      "lg": {
+        "$value": {
+          "value": 0.9375,
+          "unit": "rem"
+        }
+      },
+      "xl": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "2xl": {
+        "$value": {
+          "value": 1.125,
+          "unit": "rem"
+        }
+      },
+      "display-sm": {
+        "$value": {
+          "value": 1.75,
+          "unit": "rem"
+        }
+      },
+      "display-md": {
+        "$value": {
+          "value": 1.9375,
+          "unit": "rem"
+        }
+      },
+      "display-lg": {
+        "$value": {
+          "value": 2.5,
+          "unit": "rem"
+        }
+      },
+      "display-xl": {
+        "$value": {
+          "value": 3.625,
+          "unit": "rem"
+        }
+      },
+      "display-2xl": {
+        "$value": {
+          "value": 7.125,
+          "unit": "rem"
+        }
+      }
+    },
+    "line-height": {
+      "$type": "number",
+      "$description": "Unitless multiplier. Figma text styles: value × 100 %",
+      "$extensions": {
+        "com.figma": {
+          "scopes": [],
+          "hiddenFromPublishing": true
+        }
+      },
+      "none": {
+        "$value": 1
+      },
+      "tight": {
+        "$value": 1.1
+      },
+      "snug": {
+        "$value": 1.4
+      },
+      "normal": {
+        "$value": 1.6
+      },
+      "relaxed": {
+        "$value": 1.7
+      },
+      "loose": {
+        "$value": 1.8
+      }
+    },
+    "letter-spacing": {
+      "$type": "number",
+      "$description": "Em, a fraction of the font size (DTCG dimension allows only px/rem). Figma text styles: value × 100 %",
+      "$extensions": {
+        "com.figma": {
+          "scopes": [],
+          "hiddenFromPublishing": true
+        }
+      },
+      "display": {
+        "$value": 0.015,
+        "$extensions": {
+          "tech.r-o-design.css": "0.015em"
+        }
+      },
+      "wide": {
+        "$value": 0.05,
+        "$extensions": {
+          "tech.r-o-design.css": "0.05em"
+        }
+      },
+      "widest": {
+        "$value": 0.12,
+        "$extensions": {
+          "tech.r-o-design.css": "0.12em"
+        }
+      }
+    }
+  }
+}

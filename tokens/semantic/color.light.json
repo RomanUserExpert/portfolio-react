@@ -1,0 +1,112 @@
+{
+  "color": {
+    "$type": "color",
+    "bg": {
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        }
+      },
+      "default": {
+        "$value": "{color.neutral.50}",
+        "$description": "Page background"
+      },
+      "subtle": {
+        "$value": "{color.neutral.100}",
+        "$description": "Cards, tags, image placeholders"
+      },
+      "subtle-hover": {
+        "$value": "{color.neutral.150}"
+      },
+      "accent": {
+        "$value": "{color.orange.600}",
+        "$description": "Filled accent controls (primary button); pairs with fg/on-accent"
+      },
+      "accent-hover": {
+        "$value": "{color.orange.700}"
+      }
+    },
+    "fg": {
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        }
+      },
+      "default": {
+        "$value": "{color.neutral.950}",
+        "$description": "Primary text"
+      },
+      "secondary": {
+        "$value": "{color.neutral.700}",
+        "$description": "Text on bg/subtle (tags)"
+      },
+      "muted": {
+        "$value": "{color.neutral.600}",
+        "$description": "Body copy, secondary labels"
+      },
+      "accent": {
+        "$value": "{color.orange.600}",
+        "$description": "Accent text: links, ghost button, email. AA on bg/default"
+      },
+      "on-accent": {
+        "$value": "{color.white}",
+        "$description": "Text on bg/accent"
+      }
+    },
+    "border": {
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        }
+      },
+      "default": {
+        "$value": "{color.neutral.200}"
+      },
+      "strong": {
+        "$value": "{color.neutral.600}",
+        "$description": "Hovered and emphasized borders"
+      },
+      "accent": {
+        "$value": "{color.orange.500}",
+        "$description": "Accent outlines and underlines (non-text, 3:1)"
+      }
+    },
+    "icon": {
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "SHAPE_FILL",
+            "STROKE_COLOR"
+          ]
+        }
+      },
+      "accent": {
+        "$value": "{color.orange.500}",
+        "$description": "Logo mark, separators"
+      },
+      "subtle": {
+        "$value": "{color.neutral.200}",
+        "$description": "Inactive indicators, list markers"
+      }
+    },
+    "shadow": {
+      "$extensions": {
+        "com.figma": {
+          "scopes": [
+            "EFFECT_COLOR"
+          ]
+        }
+      },
+      "default": {
+        "$value": "{color.alpha.black.8}"
+      }
+    }
+  }
+}

@@ -1,11 +1,11 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: var(--space-16);
 }
 
 .footer {
-  margin-top: 32px;
+  margin-top: var(--space-32);
   display: flex;
   justify-content: center;
 }

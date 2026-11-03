@@ -1,14 +1,14 @@
 .lightbox {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: var(--z-index-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.92);
+  background: var(--component-lightbox-scrim);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
+  transition: opacity var(--duration-moderate) var(--easing-standard);
 }
 
 .open {
@@ -20,71 +20,60 @@
   max-width: 92vw;
   max-height: 90vh;
   object-fit: contain;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   display: block;
   user-select: none;
 }
 
-.close {
+.close,
+.prev,
+.next {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
+  background: var(--component-lightbox-control-bg);
+  border: 1px solid var(--component-lightbox-border);
+  border-radius: var(--radius-full);
   cursor: pointer;
-  color: #fff;
-  font-size: 1.1rem;
-  transition: background 0.2s;
+  color: var(--component-lightbox-fg);
+  font-size: var(--font-size-2xl);
+  transition: background var(--duration-fast);
 }
 
-.close:hover {
-  background: rgba(255, 255, 255, 0.22);
+.close {
+  top: var(--space-20);
+  right: var(--space-20);
 }
 
 .prev,
 .next {
-  position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  cursor: pointer;
-  color: #fff;
-  font-size: 1.1rem;
-  transition: background 0.2s;
 }
 
-.prev { left: 20px; }
-.next { right: 20px; }
+.prev { left: var(--space-20); }
+.next { right: var(--space-20); }
 
+.close:hover,
 .prev:hover,
 .next:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: var(--component-lightbox-control-bg-hover);
 }
 
 .counter {
   position: fixed;
-  bottom: 20px;
+  bottom: var(--space-20);
   left: 50%;
   transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
+  color: var(--component-lightbox-fg-muted);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--font-letter-spacing-wide);
 }
 
 @media (max-width: 480px) {
-  .prev { left: 8px; }
-  .next { right: 8px; }
+  .prev { left: var(--space-8); }
+  .next { right: var(--space-8); }
 }

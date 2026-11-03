@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "tokens": "node scripts/build-tokens.mjs",
+    "prebuild": "npm run tokens"
   },
   "dependencies": {
     "next": "16.2.6",
@@ -20,6 +22,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "prettier": "^3.8.3",
+    "style-dictionary": "^5.7.1",
     "typescript": "^5"
   }
 }

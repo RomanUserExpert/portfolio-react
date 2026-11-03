@@ -1,0 +1,44 @@
+{
+  "layout": {
+    "$type": "dimension",
+    "$description": "Desktop. layout.tablet.json / layout.mobile.json override part of it; Figma modes get the merged set",
+    "max-width": {
+      "$value": {
+        "value": 960,
+        "unit": "px"
+      }
+    },
+    "measure": {
+      "$value": {
+        "value": 640,
+        "unit": "px"
+      },
+      "$description": "Max width of long-form text"
+    },
+    "header-height": {
+      "$value": {
+        "value": 66,
+        "unit": "px"
+      },
+      "$description": "Sticky header: nav padding 2 × space/16 + 32 logo + 2 border"
+    },
+    "page-pad": {
+      "$value": "{space.32}"
+    },
+    "section-pad": {
+      "$value": "{space.72}"
+    },
+    "hero-font-size": {
+      "$value": "{font.size.display-2xl}",
+      "$description": "Figma only: static stand-in for the fluid h1 (CSS uses clamp)",
+      "$extensions": {
+        "tech.r-o-design.figma-only": true,
+        "com.figma": {
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        }
+      }
+    }
+  }
+}

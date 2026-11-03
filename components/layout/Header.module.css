@@ -1,43 +1,43 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 100;
-  background: var(--bg);
+  z-index: var(--z-index-sticky);
+  background: var(--color-bg-default);
   border: 1px solid transparent;
-  border-radius: 0;
+  border-radius: var(--radius-none);
   box-shadow: none;
   transition:
-    top var(--dur) var(--ease),
-    border-color var(--dur) var(--ease),
-    border-radius var(--dur) var(--ease),
-    box-shadow var(--dur) var(--ease),
-    background var(--dur) var(--ease);
+    top var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard),
+    border-radius var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard),
+    background var(--duration-fast) var(--easing-standard);
 }
 
 .scrolled {
-  top: 16px;
-  border-color: var(--border);
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  top: var(--space-16);
+  border-color: var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
 }
 
 .nav {
   display: flex;
   align-items: center;
-  padding: 18px 0;
+  padding: var(--space-16) 0;
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--text);
+  gap: var(--space-8);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-fg-default);
   margin-right: auto;
-  letter-spacing: 0.015em;
-  line-height: 1;
+  letter-spacing: var(--font-letter-spacing-display);
+  line-height: var(--font-line-height-none);
 }
 
 .logoIcon {
@@ -45,6 +45,10 @@
   align-items: center;
   flex-shrink: 0;
   animation: logoSpin 8s linear infinite;
+}
+
+.logoAccent {
+  fill: var(--color-icon-accent);
 }
 
 @keyframes logoSpin {
@@ -55,47 +59,47 @@
 .navLinks {
   list-style: none;
   display: flex;
-  gap: 28px;
-  margin-right: 28px;
+  gap: var(--space-24);
+  margin-right: var(--space-24);
 }
 
 .navLinks a {
-  font-size: 0.825rem;
-  color: var(--text-muted);
-  transition: color var(--dur);
+  font-size: var(--font-size-sm);
+  color: var(--color-fg-muted);
+  transition: color var(--duration-fast);
 }
 
 .navLinks a:hover {
-  color: var(--text);
+  color: var(--color-fg-default);
 }
 
 .themeToggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: var(--space-4);
   width: 82px;
-  padding: 5px 0;
+  padding: var(--space-4) 0;
   background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 100px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-full);
   cursor: pointer;
-  color: var(--text-muted);
-  font-family: var(--font);
-  font-size: 0.775rem;
-  font-weight: 500;
+  color: var(--color-fg-muted);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
   white-space: nowrap;
-  transition: color var(--dur), border-color var(--dur);
+  transition: color var(--duration-fast), border-color var(--duration-fast);
 }
 
 .themeToggle:hover {
-  color: var(--text);
-  border-color: var(--text-muted);
+  color: var(--color-fg-default);
+  border-color: var(--color-border-strong);
 }
 
 .themeIcon {
-  font-size: 0.85rem;
-  line-height: 1;
+  font-size: var(--font-size-md);
+  line-height: var(--font-line-height-none);
   display: flex;
   align-items: center;
 }
@@ -103,21 +107,21 @@
 .themeLabel {
   display: flex;
   align-items: center;
-  line-height: 1;
+  line-height: var(--font-line-height-none);
 }
 
 @media (max-width: 768px) {
   .header {
-    top: var(--page-pad);
-    margin-left: var(--page-pad);
-    margin-right: var(--page-pad);
-    border-color: var(--border);
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+    top: var(--layout-page-pad);
+    margin-left: var(--layout-page-pad);
+    margin-right: var(--layout-page-pad);
+    border-color: var(--color-border-default);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-raised);
   }
 
   .scrolled {
-    top: var(--page-pad);
+    top: var(--layout-page-pad);
   }
 
   .navLinks {

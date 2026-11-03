@@ -1,0 +1,40 @@
+{
+  "duration": {
+    "$type": "duration",
+    "$extensions": {
+      "com.figma": {
+        "scopes": [],
+        "hiddenFromPublishing": true
+      }
+    },
+    "fast": {
+      "$value": {
+        "value": 180,
+        "unit": "ms"
+      }
+    },
+    "moderate": {
+      "$value": {
+        "value": 250,
+        "unit": "ms"
+      }
+    },
+    "slow": {
+      "$value": {
+        "value": 400,
+        "unit": "ms"
+      }
+    }
+  },
+  "easing": {
+    "$type": "cubicBezier",
+    "standard": {
+      "$value": [
+        0.4,
+        0,
+        0.2,
+        1
+      ]
+    }
+  }
+}
