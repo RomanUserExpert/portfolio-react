@@ -11,3 +11,8 @@ const meta = {
 } satisfies Meta<typeof Carousel>
 export default meta
 export const Default: StoryObj<typeof meta> = {}
+
+/** Carousel hovered: the expand button appears; arrows and expand in their hover state. */
+export const Hover: StoryObj<typeof meta> = {
+  parameters: { pseudo: { hover: true } },
+}

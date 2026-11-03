@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import { Fragment } from 'react'
 import Button from './Button'
 
 const meta = {
@@ -23,4 +24,30 @@ export const All: Story = {
       <Button href="/#contact" variant="ghost">Get in Touch</Button>
     </div>
   ),
+}
+
+/** Every CSS state side by side, forced with storybook-addon-pseudo-states. Mirrors Figma Button `state`. */
+export const States: Story = {
+  parameters: {
+    pseudo: { hover: ['.st-hover > *'], focusVisible: ['.st-focus > *'], active: ['.st-active > *'] },
+  },
+  render: () => {
+    const states = ['default', 'hover', 'focus', 'active'] as const
+    return (
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto repeat(4, auto)', gap: 'var(--space-16) var(--space-24)', alignItems: 'center' }}>
+        <span />
+        {states.map((s) => <span key={s} style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-fg-muted)' }}>{s}</span>)}
+        {(['primary', 'ghost'] as const).map((v) => (
+          <Fragment key={v}>
+            <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-fg-muted)' }}>{v}</span>
+            {states.map((s) => (
+              <span key={`${v}-${s}`} className={`st-${s}`}>
+                <Button href="/#projects" variant={v}>{v === 'primary' ? 'View Work' : 'Get in Touch'}</Button>
+              </span>
+            ))}
+          </Fragment>
+        ))}
+      </div>
+    )
+  },
 }

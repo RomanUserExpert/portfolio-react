@@ -21,3 +21,8 @@ export const Scrolled: Story = {
   },
 }
 export const Mobile: Story = { globals: { viewport: { value: 'mobile2', isRotated: false } } }
+
+/** Hovered nav link and theme toggle. Forced with storybook-addon-pseudo-states. */
+export const HoverStates: Story = {
+  parameters: { pseudo: { hover: ['nav ul li:first-child a', 'nav button'] } },
+}

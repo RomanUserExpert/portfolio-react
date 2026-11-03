@@ -22,3 +22,15 @@ export const FeaturedGrid: Story = {
     </div>
   ),
 }
+
+/** default vs :hover (border, title and arrow turn accent, cover zooms). Forced with storybook-addon-pseudo-states. */
+export const States: Story = {
+  decorators: [(Story) => <div style={{ width: 896 }}><Story /></div>],
+  parameters: { pseudo: { hover: ['.st-hover > *'] } },
+  render: (args) => (
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-16)' }}>
+      <div className="st-default"><ProjectCard {...args} /></div>
+      <div className="st-hover"><ProjectCard {...args} /></div>
+    </div>
+  ),
+}
