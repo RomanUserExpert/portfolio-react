@@ -15,13 +15,17 @@
 //             true/false VARIANT like Dot `active`) or a `state` option of that name (Button state=loading)
 // Only what the code has and Figma lacks counts as drift. Figma-only properties (state, breakpoint,
 // scrolled, theme) are design states without a prop and are expected.
-// Not checked: tokens. The Figma variables REST API needs `file_variables:read`, an Enterprise-only scope.
+//   tokens    hash of the token spec (scripts/figma/tokens-spec.mjs) vs the newest "tokens-sync <hash>" version in
+//             the file's history, saved by sync-tokens.js. Catches "tokens changed, sync not run". It cannot see hand
+//             edits in Figma: variables over REST need an Enterprise-only scope, so the full value-by-value comparison
+//             runs locally through Figmosha (npm run figma:check-tokens). Target node: figma/drift.config.json.
 //
 // Per-template opt-out with a reason: `// drift-ignore=state:hover  <why>` (also variant:value, prop:name)
 //
-// Needs FIGMA_ACCESS_TOKEN (scopes: file_content:read, file_comments:write for --comment).
+// Needs FIGMA_ACCESS_TOKEN (scopes: file_content:read, file_versions:read, file_comments:write for --comment).
 
 import { readFileSync, readdirSync, existsSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -39,11 +43,32 @@ if (!token) {
   process.exit(2)
 }
 
+// Figma's REST API can stall for minutes right after a large edit (e.g. a token sync touching every variable):
+// time out each call and retry, so CI fails with a clear message instead of hanging until the job limit.
+const TIMEOUT_MS = 45_000
+const RETRIES = [10_000, 30_000, 60_000]
+
 async function figma(path, init = {}) {
-  const res = await fetch(API + path, { ...init, headers: { 'X-Figma-Token': token, 'Content-Type': 'application/json', ...init.headers } })
-  const body = await res.text()
-  if (!res.ok) throw new Error(`Figma ${init.method ?? 'GET'} ${path} → ${res.status}: ${body.slice(0, 200)}`)
-  return body ? JSON.parse(body) : {}
+  const url = path.startsWith('http') ? path : API + path
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const res = await fetch(url, {
+        ...init,
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+        headers: { 'X-Figma-Token': token, 'Content-Type': 'application/json', ...init.headers },
+      })
+      const body = await res.text()
+      if (res.status === 429 || res.status >= 500) throw new Error(`HTTP ${res.status}`)
+      if (!res.ok) throw Object.assign(new Error(`Figma ${init.method ?? 'GET'} ${path} → ${res.status}: ${body.slice(0, 200)}`), { fatal: true })
+      return body ? JSON.parse(body) : {}
+    } catch (e) {
+      if (e.fatal || attempt >= RETRIES.length) {
+        throw e.fatal ? e : new Error(`Figma ${init.method ?? 'GET'} ${path} failed after ${attempt + 1} tries (${e.name === 'TimeoutError' ? `no answer in ${TIMEOUT_MS / 1000}s` : e.message}). Figma may still be processing a large edit: re-run the job in a few minutes.`)
+      }
+      console.error(`  figma api: ${e.name === 'TimeoutError' ? 'timeout' : e.message} on ${path}, retrying in ${RETRIES[attempt] / 1000}s`)
+      await new Promise((r) => setTimeout(r, RETRIES[attempt]))
+    }
+  }
 }
 
 // ---------- code side ----------
@@ -61,6 +86,36 @@ function readTemplates() {
     const ignore = new Set([...src.matchAll(/^\/\/ drift-ignore=(\S+)/gm)].map((x) => x[1]))
     return { template: `figma/${f}`, component, source, url, fileKey: m[1], nodeId: m[2].replace('-', ':'), ignore }
   })
+}
+
+function readTokensTarget() {
+  const file = join(ROOT, 'figma', 'drift.config.json')
+  if (!existsSync(file)) return null
+  const { tokens } = JSON.parse(readFileSync(file, 'utf8'))
+  if (!tokens) return null
+  const m = tokens.url.match(/figma\.com\/(?:design|file)\/([^/]+)\/.*node-id=([\d-]+)/)
+  if (!m) throw new Error(`figma/drift.config.json: can't read file key and node-id from ${tokens.url}`)
+  return {
+    component: 'Tokens', template: 'tokens/*.json', source: tokens.spec, url: tokens.url, fileKey: m[1], nodeId: m[2].replace('-', ':'),
+    fix: 'Fix: npm run figma:sync-tokens (syncs variables/styles and saves a new "tokens-sync <hash>" version), then npm run figma:check-tokens.',
+  }
+}
+
+async function tokensIssues(t) {
+  const spec = JSON.parse(execFileSync(process.execPath, [join(ROOT, t.source)], { encoding: 'utf8', maxBuffer: 32 << 20 }))
+  if (!spec.hash) return [`${t.source} emits no hash`]
+  // newest first; the stamp is usually on the first page, but other saves can push it further
+  let page = `/files/${t.fileKey}/versions`
+  for (let i = 0; page && i < 10; i++) {
+    const { versions, pagination } = await figma(page)
+    const stamp = versions.find((v) => /^tokens-sync [0-9a-f]+$/.test(v.label ?? ''))
+    if (stamp) {
+      const synced = stamp.label.split(' ')[1]
+      return synced === spec.hash ? [] : [`tokens/*.json changed since the last sync: Figma has tokens-sync ${synced} (${stamp.created_at.slice(0, 10)}), the code is ${spec.hash}`]
+    }
+    page = pagination?.next_page ?? null
+  }
+  return ['no "tokens-sync <hash>" version in the file history: tokens were never synced by sync-tokens.js']
 }
 
 function codeVariants(source) {
@@ -125,7 +180,7 @@ function commentText(t, issues) {
   return [
     `${COMMENT_TAG} · ${t.component}`,
     ...issues.map((i) => `• ${i}`),
-    `Fix: add it to scripts/figma/build-components.js, rebuild Components/Blocks/Pages, update ${t.template} and run figma connect publish.`,
+    t.fix ?? `Fix: add it to scripts/figma/build-components.js, rebuild Components/Blocks/Pages, update ${t.template} and run figma connect publish.`,
     '(auto: scripts/figma/check-drift.mjs, removed when fixed)',
   ].join('\n')
 }
@@ -157,16 +212,23 @@ async function syncComments(fileKey, results) {
 // ---------- main ----------
 
 const templates = readTemplates()
+const tokens = readTokensTarget()
 const byFile = Map.groupBy(templates, (t) => t.fileKey)
+if (tokens && !byFile.has(tokens.fileKey)) byFile.set(tokens.fileKey, [])
 let drift = 0
 
 for (const [fileKey, ts] of byFile) {
-  const { nodes } = await figma(`/files/${fileKey}/nodes?depth=1&ids=${ts.map((t) => t.nodeId).join(',')}`)
+  const ids = [...ts.map((t) => t.nodeId), ...(tokens?.fileKey === fileKey ? [tokens.nodeId] : [])]
+  const { nodes } = await figma(`/files/${fileKey}/nodes?depth=1&ids=${ids.join(',')}`)
+  const missing = (t) => `Figma node ${t.nodeId} not found: was the page rebuilt? Update the url in ${t.template === 'tokens/*.json' ? 'figma/drift.config.json' : t.template}`
   const results = ts.map((t) => {
     const node = nodes[t.nodeId]?.document
-    if (!node) return { t, issues: [`Figma node ${t.nodeId} not found: was Components rebuilt? Update the url in ${t.template}`] }
+    if (!node) return { t, issues: [missing(t)] }
     return { t, issues: diff(t, node.componentPropertyDefinitions) }
   })
+  if (tokens?.fileKey === fileKey) {
+    results.push({ t: tokens, issues: nodes[tokens.nodeId]?.document ? await tokensIssues(tokens) : [missing(tokens)] })
+  }
 
   for (const { t, issues } of results.sort((a, b) => a.t.component.localeCompare(b.t.component))) {
     if (!issues.length) { console.log(`✓ ${t.component}`); continue }
@@ -178,6 +240,7 @@ for (const [fileKey, ts] of byFile) {
   if (args.has('--comment')) for (const line of await syncComments(fileKey, results)) console.log(`  figma: ${line}`)
 }
 
-console.log(drift ? `\n${drift} component(s) out of date in Figma` : `\nFigma is in sync with the code (${templates.length} components)`)
+const scope = `${templates.length} components${tokens ? ' + tokens' : ''}`
+console.log(drift ? `\n${drift} item(s) out of date in Figma (checked ${scope})` : `\nFigma is in sync with the code (${scope})`)
 // exitCode, not exit(): exiting with fetch sockets still open trips a libuv assertion on Windows
 process.exitCode = drift ? 1 : 0

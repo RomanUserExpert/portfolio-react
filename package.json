@@ -10,6 +10,8 @@
     "tokens": "node scripts/build-tokens.mjs",
     "prebuild": "npm run tokens",
     "figma:spec": "node scripts/figma/tokens-spec.mjs > .figma-spec.json",
+    "figma:sync-tokens": "npm run figma:spec && bash scripts/figma/figmosha.sh exec -t 240 --file scripts/figma/sync-tokens.js --set SPEC=@.figma-spec.json",
+    "figma:check-tokens": "npm run figma:spec && bash scripts/figma/figmosha.sh exec -t 240 --file scripts/figma/check-tokens.js --set SPEC=@.figma-spec.json",
     "figma:check": "node scripts/figma/check-drift.mjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

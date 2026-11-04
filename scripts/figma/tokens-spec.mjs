@@ -7,6 +7,7 @@
 // Plus text styles (semantic/typography.json) and effect styles (semantic/effect.json).
 // Units: rem × 16 → px; line-height and letter-spacing go into text styles as PERCENT, not variables.
 import { readFile } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
 
 const read = async (f) => JSON.parse(await readFile(new URL(`../../tokens/${f}.json`, import.meta.url), 'utf8'))
 
@@ -146,5 +147,8 @@ const effectStyles = flatten(await read('semantic/effect')).map((t) => {
   }
 })
 
-const spec = { generated: 'scripts/figma/tokens-spec.mjs', collections, textStyles, effectStyles }
+// hash: fingerprint of what Figma should contain. sync-tokens.js stamps it into the file's version history
+// ("tokens-sync <hash>"); check-drift.mjs compares it in CI (variables themselves need an Enterprise-only REST scope).
+const hash = createHash('sha256').update(JSON.stringify({ collections, textStyles, effectStyles })).digest('hex').slice(0, 12)
+const spec = { generated: 'scripts/figma/tokens-spec.mjs', hash, collections, textStyles, effectStyles }
 process.stdout.write(JSON.stringify(spec))

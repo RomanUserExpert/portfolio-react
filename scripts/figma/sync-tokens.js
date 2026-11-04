@@ -6,6 +6,7 @@
 //   figmosha exec --file scripts/figma/sync-tokens.js --set SPEC=@.figma-spec.json
 //
 // SPEC is injected by Figmosha as a parsed object.
+// Ends by saving a named version "tokens-sync <SPEC.hash>": the marker check-drift.mjs reads in CI.
 
 const report = { created: [], updated: 0, stale: [], textStyles: [], effectStyles: [] }
 
@@ -92,7 +93,12 @@ for (const e of SPEC.effectStyles) {
   report.effectStyles.push(e.name)
 }
 
+/* ── stamp: a named version "tokens-sync <hash>" tells CI (check-drift.mjs, via REST /versions) which tokens
+   Figma was last synced from. Version history is readable on every plan; variables over REST are Enterprise-only. ── */
+if (SPEC.hash) await figma.saveVersionHistoryAsync(`tokens-sync ${SPEC.hash}`, 'Variables and styles synced from tokens/*.json by scripts/figma/sync-tokens.js')
+
 return {
+  stamp: SPEC.hash ? `tokens-sync ${SPEC.hash}` : 'no hash in SPEC: regenerate with npm run figma:spec',
   collections: SPEC.collections.map((c) => `${c.name} [${c.modes.join('/')}] ${c.vars.length}`),
   created: report.created.length, createdSample: report.created.slice(0, 8),
   updated: report.updated, stale: report.stale,

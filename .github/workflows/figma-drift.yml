@@ -1,6 +1,6 @@
-# Fails when a Figma component lags behind the code (a variant or CSS state that Figma lacks)
-# and pins a comment on that component in Figma; the comment is removed once Figma catches up.
-# See scripts/figma/check-drift.mjs.
+# Fails when Figma lags behind the code: a component variant/state/prop Figma lacks, or tokens changed since the
+# last sync (the "tokens-sync <hash>" version in the file history). Pins a comment on the stale node in Figma;
+# the comment is removed once Figma catches up. See scripts/figma/check-drift.mjs.
 name: Figma drift
 
 on:
@@ -11,12 +11,13 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 10 # the script retries a stalled Figma API; never hang the default 6 hours
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-      # No npm ci: the script only uses Node built-ins and fetch
+      # No npm ci: the scripts only use Node built-ins and fetch (tokens-spec.mjs reads tokens/*.json)
       - run: node scripts/figma/check-drift.mjs --comment
         env:
           FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}

@@ -6,24 +6,26 @@ start the bridge, then run the plugin «Figmosha · General» in the Figma file.
 
 | Script | What it does | Re-runnable |
 |---|---|---|
-| `tokens-spec.mjs` | Node: tokens JSON → flat spec (`npm run figma:spec` → `.figma-spec.json`, gitignored) | yes |
-| `sync-tokens.js` | Figma: creates/updates collections Color Primitives, Size, Typography Primitives (one per `tokens/primitives` file, 1 mode, hidden), Semantic (Light/Dark), Layout (Desktop/Tablet/Mobile), 13 text styles, effect `shadow/raised`. Finds by name, never deletes, reports `stale` | yes, idempotent |
+| `tokens-spec.mjs` | Node: tokens JSON → flat spec (`npm run figma:spec` → `.figma-spec.json`, gitignored) with a `hash` of what Figma should contain | yes |
+| `sync-tokens.js` | Figma: creates/updates collections Color Primitives, Size, Typography Primitives (one per `tokens/primitives` file, 1 mode, hidden), Semantic (Light/Dark), Layout (Desktop/Tablet/Mobile), 13 text styles, effect `shadow/raised`. Finds by name, never deletes, reports `stale`. Ends by saving a named version `tokens-sync <hash>` (the marker the CI check reads). `npm run figma:sync-tokens` | yes, idempotent |
+| `check-tokens.js` | Figma, read-only: compares every variable in every mode (value or alias, scopes, code syntax, hidden), text and effect styles with the spec. Catches hand edits in Figma. `npm run figma:check-tokens` | yes |
 | `lib.js` | Helpers prepended to every build script: `box`, `text`, `bind`, `fill`, `variants`, `textProp`, `inst`… | — |
 | `build-foundations.js` | Page Foundations: palette, semantic colors in both modes, type, space, radius, size, effect, layout | yes (replaces its frame) |
 | `build-components.js` | Page Components: Button, Tag, SectionLabel, Pill, Link, ThemeToggle, Logo, IconButton, Dot, ProjectCard, ProcessRow, Header, Footer, Carousel, Lightbox | yes, **but** rebuilding gives new component ids: rebuild Blocks and Pages after it |
 | `build-blocks.js` | Page Blocks: GridPattern, Hero, ProjectsSection, AboutSection, ProcessSection, ContactSection, ProjectsHead, CaseHead, CaseSection, CvHead | same, rebuild Pages after it |
 | `build-templates.js` | Page Pages: Home (Desktop/Mobile × Light/Dark), Projects, Case · RiskLayer, CV | yes |
 | `build-cover.js` | Page Cover + file thumbnail | yes |
-| `check-drift.mjs` | Node: finds where Figma components lag behind the code (prop unions, CSS states vs Figma variants/`state`), pairs taken from `figma/*.figma.ts`. `npm run figma:check`; CI (`.github/workflows/figma-drift.yml`) runs it with `--comment`, which pins a comment on each stale component and removes it once fixed. Needs `FIGMA_ACCESS_TOKEN` | yes |
+| `check-drift.mjs` | Node: finds where Figma lags behind the code: prop unions, CSS states and boolean props vs Figma variants/`state` (pairs from `figma/*.figma.ts`), and the token spec hash vs the newest `tokens-sync <hash>` version (target node in `figma/drift.config.json`). `npm run figma:check`; CI (`.github/workflows/figma-drift.yml`) runs it with `--comment`, which pins a comment on each stale component and removes it once fixed. Needs `FIGMA_ACCESS_TOKEN` | yes |
+| `figmosha.sh` | `scripts/figma/figmosha.sh exec --file <script> [args]`: plain Figmosha call without `lib.js` (fast; for self-contained scripts) | — |
 | `run.sh` | `scripts/figma/run.sh <script> [figmosha args]`: prepends `lib.js` and runs it | — |
 | `snap.sh` | `scripts/figma/snap.sh <node-id> out.png [scale]`: exports a node to PNG (chunked, Figmosha caps results at 64 KB) | — |
 
 ## Typical runs
 
 ```bash
-# tokens changed
-npm run tokens && npm run figma:spec
-"$FIGMOSHA/venv/Scripts/python.exe" "$FIGMOSHA/figmosha.py" exec --file scripts/figma/sync-tokens.js --set SPEC=@.figma-spec.json
+# tokens changed (CI turns red until this runs: it compares the spec hash with the "tokens-sync" version)
+npm run tokens && npm run figma:sync-tokens
+npm run figma:check-tokens   # full value-by-value check, also catches hand edits in Figma
 
 # full rebuild (blocks/templates need project data and uploaded images)
 node -e 'import("./lib/projects.ts").then(m=>require("fs").writeFileSync("projects.tmp.json",JSON.stringify(m.projects)))'
