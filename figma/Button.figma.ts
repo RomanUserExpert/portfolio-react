@@ -9,10 +9,17 @@ const variant = instance.getEnum('variant', {
   primary: 'primary',
   ghost: 'ghost',
 })
-// 'state' (default | hover | focus | active) is CSS-only: no prop in code.
+// hover / focus / active are CSS-only; disabled is a real <button> attribute (and rules out href)
+const disabled = instance.getEnum('state', {
+  default: false,
+  hover: false,
+  focus: false,
+  active: false,
+  disabled: true,
+})
 
 export default {
-  example: figma.code`<Button${variant === 'ghost' ? ' variant="ghost"' : ''}>${label}</Button>`,
+  example: figma.code`<Button${variant === 'ghost' ? ' variant="ghost"' : ''}${disabled ? ' disabled' : ''}>${label}</Button>`,
   imports: ["import Button from '@/components/ui/Button'"],
   id: 'button',
   metadata: { nestable: true },

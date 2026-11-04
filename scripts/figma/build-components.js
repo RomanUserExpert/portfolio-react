@@ -24,11 +24,16 @@ const STATES = [{ state: 'default' }, { state: 'hover' }]
 
 /* ───────── Button ───────── */
 let row = await section('Button', 'components/ui/Button.tsx · variant: primary | ghost')
-const BUTTON_STATES = ['default', 'hover', 'focus', 'active'].map((state) => ({ state }))
+const BUTTON_STATES = ['default', 'hover', 'focus', 'active', 'disabled'].map((state) => ({ state }))
 const button = await variants(row, 'Button', both([{ variant: 'primary' }, { variant: 'ghost' }], BUTTON_STATES), async ({ variant, state }) => {
   const c = box(null, { component: true, dir: 'HORIZONTAL', align: 'CENTER', justify: 'CENTER', pad: ['space/10', 'space/24'], radius: 'radius/sm' })
   const hov = state === 'hover', act = state === 'active'
-  if (variant === 'primary') {
+  if (state === 'disabled') {
+    // CSS .primary:disabled / .ghost:disabled: neutral for both variants, ghost stays transparent
+    if (variant === 'primary') fill(c, 'color/bg/subtle')
+    stroke(c, 'color/border/default')
+    await text(c, 'View Work', 'Label/MD', 'color/fg/muted', { name: 'label' })
+  } else if (variant === 'primary') {
     const bg = act ? 'color/bg/accent-active' : hov ? 'color/bg/accent-hover' : 'color/bg/accent'
     fill(c, bg); stroke(c, bg)
     await text(c, 'View Work', 'Label/MD', 'color/fg/on-accent', { name: 'label' })

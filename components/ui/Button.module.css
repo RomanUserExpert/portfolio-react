@@ -42,3 +42,21 @@
   background: var(--color-bg-subtle);
   border-color: var(--color-border-accent);
 }
+
+/* <button disabled> only: a link (href) has no disabled state.
+   Declared last so it wins over :hover / :active at equal specificity.
+   Disabled controls are exempt from WCAG contrast, so muted text is fine here. */
+.primary:disabled,
+.ghost:disabled {
+  color: var(--color-fg-muted);
+  border-color: var(--color-border-default);
+  cursor: not-allowed;
+}
+
+.primary:disabled {
+  background: var(--color-bg-subtle);
+}
+
+.ghost:disabled {
+  background: transparent;
+}
