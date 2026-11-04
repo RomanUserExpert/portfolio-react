@@ -1,5 +1,6 @@
-# Fails when Figma lags behind the code: a component variant/state/prop Figma lacks, or tokens changed since the
-# last sync (the "tokens-sync <hash>" version in the file history). See scripts/figma/check-drift.mjs.
+# Fails when design and code drift apart: a component variant/state/prop Figma lacks, tokens changed since the
+# last sync (the "tokens-sync <hash>" version in the file history), or a Code Connect template that no longer
+# matches the Figma component. See scripts/figma/check-drift.mjs.
 # Signals: a comment on the stale node in Figma, and a GitHub issue labelled figma-drift, assigned to whoever
 # pushed (= a GitHub notification). Both are kept up to date and closed/removed once Figma catches up.
 name: Figma drift
@@ -49,7 +50,7 @@ jobs:
           if [ "$CODE" = 1 ]; then
             printf '\n[CI run](%s) · commit %s\n' "$RUN" "$sha" >> drift.md
             if [ -z "$open" ]; then
-              gh issue create --title "Figma is out of date" --label "$label" --assignee "$ACTOR" --body-file drift.md
+              gh issue create --title "Figma drift: design and code out of sync" --label "$label" --assignee "$ACTOR" --body-file drift.md
             else
               before=$(gh issue view "$open" --json body -q .body | sed '/^\[CI run\]/d')
               gh issue edit "$open" --body-file drift.md

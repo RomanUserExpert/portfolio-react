@@ -1,0 +1,31 @@
+# Publishes Code Connect snippets (figma/*.figma.ts) to Figma Dev Mode when they change on main,
+# so a template edit can never sit unpublished. Parses first and stops on any unreadable template.
+# Publishing from here also re-asserts the CLI templates over links made by hand in Figma's Code Connect UI.
+name: Code Connect
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'figma/**'
+      - 'figma.config.json'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx tsc -p figma/tsconfig.json
+      - run: npx figma connect parse --exit-on-unreadable-files --skip-update-check > /dev/null
+        env:
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+      - run: npx figma connect publish --exit-on-unreadable-files --skip-update-check
+        env:
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}

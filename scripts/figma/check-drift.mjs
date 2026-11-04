@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Finds where Figma components lag behind the code, so Figma never silently goes stale.
+// Finds where design and code drift apart (Figma components, tokens, Code Connect templates), so nothing goes stale silently.
 //
 //   node scripts/figma/check-drift.mjs            report, exit 1 on drift
 //   node scripts/figma/check-drift.mjs --comment  also pin a comment on each stale component in Figma
@@ -16,6 +16,8 @@
 //             true/false VARIANT like Dot `active`) or a `state` option of that name (Button state=loading)
 // Only what the code has and Figma lacks counts as drift. Figma-only properties (state, breakpoint,
 // scrolled, theme) are design states without a prop and are expected.
+//   snippets  the Code Connect template itself: every instance.getString/getBoolean/getEnum property must exist
+//             in Figma, and every getEnum must map exactly the Figma variant options (else: undefined in Dev Mode)
 //   tokens    hash of the token spec (scripts/figma/tokens-spec.mjs) vs the newest "tokens-sync <hash>" version in
 //             the file's history, saved by sync-tokens.js. Catches "tokens changed, sync not run". It cannot see hand
 //             edits in Figma: variables over REST need an Enterprise-only scope, so the full value-by-value comparison
@@ -85,7 +87,7 @@ function readTemplates() {
     const m = url.match(/figma\.com\/(?:design|file)\/([^/]+)\/.*node-id=([\d-]+)/)
     if (!m) throw new Error(`figma/${f}: can't read file key and node-id from ${url}`)
     const ignore = new Set([...src.matchAll(/^\/\/ drift-ignore=(\S+)/gm)].map((x) => x[1]))
-    return { template: `figma/${f}`, component, source, url, fileKey: m[1], nodeId: m[2].replace('-', ':'), ignore }
+    return { template: `figma/${f}`, templateSrc: src, component, source, url, fileKey: m[1], nodeId: m[2].replace('-', ':'), ignore }
   })
 }
 
@@ -172,7 +174,40 @@ function diff(t, defs) {
     if (!figStates) issues.push(`CSS has :${s === 'focus' ? 'focus-visible' : s}, the Figma component has no \`state\` property`)
     else if (!figStates.includes(s)) issues.push(`CSS has :${s === 'focus' ? 'focus-visible' : s}, Figma \`state\` has only ${figStates.join(' | ')}`)
   }
+  return [...issues, ...templateIssues(t, props)]
+}
+
+// The Code Connect template itself vs the Figma component: every property it reads must exist, and every
+// getEnum must map exactly the Figma variant options (an unmapped option renders `undefined` in the snippet).
+// Only `instance.get…` calls count: nested ones like `tag.getString('label')` read a child component.
+const CC = 'Code Connect:'
+function templateIssues(t, props) {
+  const issues = []
+  const src = t.templateSrc.replace(/\/\/.*$/gm, '')
+  const where = `\`${t.template}\``
+  for (const [, kind, name, body] of src.matchAll(/instance\.get(String|Boolean|Enum|InstanceSwap)\(\s*'([^']+)'(?:\s*,\s*\{([^}]*)\})?/g)) {
+    const fig = props[name]
+    const want = { String: 'TEXT', Boolean: 'BOOLEAN', Enum: 'VARIANT', InstanceSwap: 'INSTANCE_SWAP' }[kind]
+    if (!fig) { issues.push(`${CC} ${where} reads \`${name}\`, the Figma component has no such property`); continue }
+    if (fig.type !== want) { issues.push(`${CC} ${where} reads \`${name}\` as ${want}, in Figma it is ${fig.type}`); continue }
+    if (kind !== 'Enum' || body === undefined) continue
+    const keys = [...body.matchAll(/(?:^|,)\s*(?:'([^']+)'|"([^"]+)"|([\w$-]+))\s*:/g)].map((x) => x[1] ?? x[2] ?? x[3])
+    const missing = fig.variantOptions.filter((o) => !keys.includes(o))
+    const extra = keys.filter((k) => !fig.variantOptions.includes(k))
+    if (missing.length) issues.push(`${CC} ${where} maps \`${name}\` without ${missing.map((o) => `\`${o}\``).join(', ')}: the snippet renders undefined there`)
+    if (extra.length) issues.push(`${CC} ${where} maps \`${name}\`=${extra.map((o) => `\`${o}\``).join(', ')}, which Figma no longer has`)
+  }
   return issues
+}
+
+function fixFor(t, issues) {
+  if (t.fix) return t.fix
+  const design = issues.some((i) => !i.startsWith(CC))
+  const cc = issues.some((i) => i.startsWith(CC))
+  return [
+    design && `Fix: add it to scripts/figma/build-components.js (patch the live set in place to keep ids), update ${t.template}.`,
+    cc && `Fix: update ${t.template}; the Code Connect workflow publishes it on push to main.`,
+  ].filter(Boolean).join('\n')
 }
 
 // ---------- Figma comments ----------
@@ -181,7 +216,7 @@ function commentText(t, issues) {
   return [
     `${COMMENT_TAG} · ${t.component}`,
     ...issues.map((i) => `• ${i}`),
-    t.fix ?? `Fix: add it to scripts/figma/build-components.js, rebuild Components/Blocks/Pages, update ${t.template} and run figma connect publish.`,
+    fixFor(t, issues),
     '(auto: scripts/figma/check-drift.mjs, removed when fixed)',
   ].join('\n')
 }
@@ -252,7 +287,7 @@ const reportAt = process.argv.indexOf('--report')
 if (reportAt > -1) {
   const lines = drift
     ? [
-        `Figma lags behind the code in **${drift}** item(s) (checked ${scope}).`,
+        `Design and code are out of sync in **${drift}** item(s) (checked ${scope}): Figma components, tokens or Code Connect templates.`,
         '',
         ...stale.flatMap(({ t, issues }) => [
           `### ${t.component}`,
@@ -260,7 +295,7 @@ if (reportAt > -1) {
           '',
           ...issues.map((i) => `- ${i}`),
           '',
-          `**${(t.fix ?? `Fix: add it to scripts/figma/build-components.js, rebuild, update ${t.template} and run figma connect publish.`).replace(/^Fix: /, 'Fix:** ')}`,
+          ...fixFor(t, issues).split(/\n/).map((l) => l.replace(/^Fix: /, '**Fix:** ')),
           '',
         ]),
         '_Opened and kept up to date by `scripts/figma/check-drift.mjs` (workflow Figma drift); closed automatically once Figma catches up._',
