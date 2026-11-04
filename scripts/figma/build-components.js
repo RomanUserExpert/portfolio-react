@@ -24,7 +24,19 @@ const STATES = [{ state: 'default' }, { state: 'hover' }]
 
 /* ───────── Button ───────── */
 let row = await section('Button', 'components/ui/Button.tsx · variant: primary | ghost')
-const BUTTON_STATES = ['default', 'hover', 'focus', 'active', 'disabled'].map((state) => ({ state }))
+const BUTTON_STATES = ['default', 'hover', 'focus', 'active', 'disabled', 'loading'].map((state) => ({ state }))
+// CSS .loading .spinner: 1em ¾ ring, 2px, label colour, centred over the hidden label (which keeps the width)
+function buttonSpinner(c, color) {
+  c.findOne((n) => n.type === 'TEXT' && n.name === 'label').opacity = 0
+  const sp = figma.createEllipse(); sp.name = 'spinner'
+  c.appendChild(sp); sp.layoutPositioning = 'ABSOLUTE'
+  const d = 14 // font/size/md: 1em of the label
+  sp.resize(d, d); sp.x = (c.width - d) / 2; sp.y = (c.height - d) / 2
+  sp.constraints = { horizontal: 'CENTER', vertical: 'CENTER' }
+  sp.arcData = { startingAngle: 0, endingAngle: Math.PI * 1.5, innerRadius: (d / 2 - 2) / (d / 2) }
+  fill(sp, color)
+  return sp
+}
 const button = await variants(row, 'Button', both([{ variant: 'primary' }, { variant: 'ghost' }], BUTTON_STATES), async ({ variant, state }) => {
   const c = box(null, { component: true, dir: 'HORIZONTAL', align: 'CENTER', justify: 'CENTER', pad: ['space/10', 'space/24'], radius: 'radius/sm' })
   const hov = state === 'hover', act = state === 'active'
@@ -52,6 +64,7 @@ const button = await variants(row, 'Button', both([{ variant: 'primary' }, { var
     ring.fills = []; stroke(ring, 'color/border/focus', 2, 'INSIDE'); radius(ring, 'radius/md')
     try { bind(ring, 'strokeWeight', 'focus-ring/width') } catch (e) { /* strokeWeight not bindable here: literal 2 stays */ }
   }
+  if (state === 'loading') buttonSpinner(c, variant === 'primary' ? 'color/fg/on-accent' : 'color/fg/accent-brand')
   return c
 })
 textProp(button, 'label', 'View Work')

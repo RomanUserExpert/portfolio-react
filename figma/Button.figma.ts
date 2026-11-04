@@ -9,17 +9,19 @@ const variant = instance.getEnum('variant', {
   primary: 'primary',
   ghost: 'ghost',
 })
-// hover / focus / active are CSS-only; disabled is a real <button> attribute (and rules out href)
-const disabled = instance.getEnum('state', {
-  default: false,
-  hover: false,
-  focus: false,
-  active: false,
-  disabled: true,
+// hover / focus / active are CSS-only; disabled is a real <button> attribute (and rules out href);
+// loading is a Button prop
+const flag = instance.getEnum('state', {
+  default: '',
+  hover: '',
+  focus: '',
+  active: '',
+  disabled: ' disabled',
+  loading: ' loading',
 })
 
 export default {
-  example: figma.code`<Button${variant === 'ghost' ? ' variant="ghost"' : ''}${disabled ? ' disabled' : ''}>${label}</Button>`,
+  example: figma.code`<Button${variant === 'ghost' ? ' variant="ghost"' : ''}${flag}>${label}</Button>`,
   imports: ["import Button from '@/components/ui/Button'"],
   id: 'button',
   metadata: { nestable: true },
