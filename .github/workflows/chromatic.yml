@@ -1,0 +1,30 @@
+# Publishes Storybook to Chromatic on every push to main.
+# Figma's Storybook Connect plugin links components to these stories and always shows
+# the latest main build, so Figma reflects the repo without manual copies.
+name: Chromatic
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # Chromatic needs git history to find the baseline build
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # Storybook reads styles/tokens.css, which is generated from tokens/*.json
+      - run: npm run tokens
+      - uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          onlyChanged: true # TurboSnap: snapshot only stories affected by the change
+          autoAcceptChanges: main # main is the only branch: its builds are the baseline
