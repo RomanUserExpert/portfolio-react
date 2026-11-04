@@ -14,6 +14,7 @@ start the bridge, then run the plugin «Figmosha · General» in the Figma file.
 | `build-blocks.js` | Page Blocks: GridPattern, Hero, ProjectsSection, AboutSection, ProcessSection, ContactSection, ProjectsHead, CaseHead, CaseSection, CvHead | same, rebuild Pages after it |
 | `build-templates.js` | Page Pages: Home (Desktop/Mobile × Light/Dark), Projects, Case · RiskLayer, CV | yes |
 | `build-cover.js` | Page Cover + file thumbnail | yes |
+| `check-drift.mjs` | Node: finds where Figma components lag behind the code (prop unions, CSS states vs Figma variants/`state`), pairs taken from `figma/*.figma.ts`. `npm run figma:check`; CI (`.github/workflows/figma-drift.yml`) runs it with `--comment`, which pins a comment on each stale component and removes it once fixed. Needs `FIGMA_ACCESS_TOKEN` | yes |
 | `run.sh` | `scripts/figma/run.sh <script> [figmosha args]`: prepends `lib.js` and runs it | — |
 | `snap.sh` | `scripts/figma/snap.sh <node-id> out.png [scale]`: exports a node to PNG (chunked, Figmosha caps results at 64 KB) | — |
 

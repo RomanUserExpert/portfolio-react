@@ -1,0 +1,22 @@
+# Fails when a Figma component lags behind the code (a variant or CSS state that Figma lacks)
+# and pins a comment on that component in Figma; the comment is removed once Figma catches up.
+# See scripts/figma/check-drift.mjs.
+name: Figma drift
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      # No npm ci: the script only uses Node built-ins and fetch
+      - run: node scripts/figma/check-drift.mjs --comment
+        env:
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
