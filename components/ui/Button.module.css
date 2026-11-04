@@ -60,3 +60,37 @@
 .ghost:disabled {
   background: transparent;
 }
+
+/* loading: keeps the variant's default look; the hidden label holds the width, the spinner sits on top.
+   No pointer events, so hover/active never fire while busy. */
+.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.loading .label {
+  visibility: hidden;
+}
+
+.spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: spin var(--duration-spin) linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* still signals "busy", just calmer */
+  .spinner {
+    animation-duration: calc(var(--duration-spin) * 3);
+  }
+}
