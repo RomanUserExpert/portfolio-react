@@ -1,12 +1,17 @@
 # Fails when Figma lags behind the code: a component variant/state/prop Figma lacks, or tokens changed since the
-# last sync (the "tokens-sync <hash>" version in the file history). Pins a comment on the stale node in Figma;
-# the comment is removed once Figma catches up. See scripts/figma/check-drift.mjs.
+# last sync (the "tokens-sync <hash>" version in the file history). See scripts/figma/check-drift.mjs.
+# Signals: a comment on the stale node in Figma, and a GitHub issue labelled figma-drift, assigned to whoever
+# pushed (= a GitHub notification). Both are kept up to date and closed/removed once Figma catches up.
 name: Figma drift
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   check:
@@ -17,7 +22,46 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-      # No npm ci: the scripts only use Node built-ins and fetch (tokens-spec.mjs reads tokens/*.json)
-      - run: node scripts/figma/check-drift.mjs --comment
+
+      # No npm ci: the scripts only use Node built-ins and fetch. Exit codes: 0 in sync, 1 drift, 2 could not check.
+      - id: check
+        run: |
+          set +e
+          node scripts/figma/check-drift.mjs --comment --report drift.md
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          # 2 = config or Figma API failure: fail here and leave the issue alone (it says nothing about drift)
+          if [ "$code" -gt 1 ]; then exit "$code"; fi
         env:
           FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+
+      - name: Sync the figma-drift issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CODE: ${{ steps.check.outputs.code }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          label=figma-drift
+          gh label create "$label" --color E05F03 --description "Figma lags behind the code (scripts/figma/check-drift.mjs)" --force > /dev/null
+          open=$(gh issue list --label "$label" --state open --json number -q '.[0].number')
+          sha=${GITHUB_SHA::7}
+          if [ "$CODE" = 1 ]; then
+            printf '\n[CI run](%s) · commit %s\n' "$RUN" "$sha" >> drift.md
+            if [ -z "$open" ]; then
+              gh issue create --title "Figma is out of date" --label "$label" --assignee "$ACTOR" --body-file drift.md
+            else
+              before=$(gh issue view "$open" --json body -q .body | sed '/^\[CI run\]/d')
+              gh issue edit "$open" --body-file drift.md
+              # comment (= a notification) only when what is stale changed, not on every push
+              if [ "$before" != "$(sed '/^\[CI run\]/d' drift.md)" ]; then
+                gh issue comment "$open" --body "What is out of date changed in $sha: see the updated description. [CI run]($RUN)"
+              fi
+            fi
+          elif [ -n "$open" ]; then
+            gh issue close "$open" --comment "Figma is in sync with the code again as of $sha. [CI run]($RUN)"
+          fi
+
+      - name: Fail on drift
+        if: steps.check.outputs.code == '1'
+        run: exit 1

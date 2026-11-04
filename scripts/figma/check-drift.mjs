@@ -4,6 +4,7 @@
 //   node scripts/figma/check-drift.mjs            report, exit 1 on drift
 //   node scripts/figma/check-drift.mjs --comment  also pin a comment on each stale component in Figma
 //                                                 (and delete it once the drift is gone)
+//   node scripts/figma/check-drift.mjs --report <file.md>  also write a Markdown report (the CI GitHub issue body)
 //
 // Component pairs come from the Code Connect templates (figma/*.figma.ts: `// url=` and `// source=`),
 // so there is no second list to keep in sync. Checks, code → Figma:
@@ -24,7 +25,7 @@
 //
 // Needs FIGMA_ACCESS_TOKEN (scopes: file_content:read, file_versions:read, file_comments:write for --comment).
 
-import { readFileSync, readdirSync, existsSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync, writeFileSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -211,11 +212,14 @@ async function syncComments(fileKey, results) {
 
 // ---------- main ----------
 
+// Exit codes: 0 in sync · 1 drift · 2 could not check (config or Figma API error). CI opens an issue only on 1.
+async function main() {
 const templates = readTemplates()
 const tokens = readTokensTarget()
 const byFile = Map.groupBy(templates, (t) => t.fileKey)
 if (tokens && !byFile.has(tokens.fileKey)) byFile.set(tokens.fileKey, [])
 let drift = 0
+const stale = [] // { t, issues } for the Markdown report
 
 for (const [fileKey, ts] of byFile) {
   const ids = [...ts.map((t) => t.nodeId), ...(tokens?.fileKey === fileKey ? [tokens.nodeId] : [])]
@@ -233,6 +237,7 @@ for (const [fileKey, ts] of byFile) {
   for (const { t, issues } of results.sort((a, b) => a.t.component.localeCompare(b.t.component))) {
     if (!issues.length) { console.log(`✓ ${t.component}`); continue }
     drift++
+    stale.push({ t, issues })
     console.log(`✗ ${t.component}  (${t.source} ↔ ${t.url})`)
     for (const i of issues) console.log(`    ${i}`)
   }
@@ -242,5 +247,32 @@ for (const [fileKey, ts] of byFile) {
 
 const scope = `${templates.length} components${tokens ? ' + tokens' : ''}`
 console.log(drift ? `\n${drift} item(s) out of date in Figma (checked ${scope})` : `\nFigma is in sync with the code (${scope})`)
+
+const reportAt = process.argv.indexOf('--report')
+if (reportAt > -1) {
+  const lines = drift
+    ? [
+        `Figma lags behind the code in **${drift}** item(s) (checked ${scope}).`,
+        '',
+        ...stale.flatMap(({ t, issues }) => [
+          `### ${t.component}`,
+          `[Open in Figma](${t.url}) · code: \`${t.source}\``,
+          '',
+          ...issues.map((i) => `- ${i}`),
+          '',
+          `**${(t.fix ?? `Fix: add it to scripts/figma/build-components.js, rebuild, update ${t.template} and run figma connect publish.`).replace(/^Fix: /, 'Fix:** ')}`,
+          '',
+        ]),
+        '_Opened and kept up to date by `scripts/figma/check-drift.mjs` (workflow Figma drift); closed automatically once Figma catches up._',
+      ]
+    : [`Figma is in sync with the code (${scope}).`]
+  writeFileSync(process.argv[reportAt + 1], lines.join('\n') + '\n')
+}
+return drift
+}
+
 // exitCode, not exit(): exiting with fetch sockets still open trips a libuv assertion on Windows
-process.exitCode = drift ? 1 : 0
+main().then(
+  (drift) => { process.exitCode = drift ? 1 : 0 },
+  (e) => { console.error(`check-drift could not run: ${e.message}`); process.exitCode = 2 },
+)
