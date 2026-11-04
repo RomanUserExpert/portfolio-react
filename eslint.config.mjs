@@ -5,6 +5,8 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // Code Connect templates must default-export a plain object literal
+  { files: ["figma/**/*.figma.ts"], rules: { "import/no-anonymous-default-export": "off" } },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
