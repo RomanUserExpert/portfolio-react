@@ -26,6 +26,14 @@ jobs:
       - run: npx figma connect parse --exit-on-unreadable-files --skip-update-check > /dev/null
         env:
           FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
-      - run: npx figma connect publish --exit-on-unreadable-files --skip-update-check
+      # The CLI has no retries and Figma's API answers 503 for minutes after large edits: try up to 4 times.
+      - run: |
+          for wait in 20 60 120 0; do
+            npx figma connect publish --exit-on-unreadable-files --skip-update-check && exit 0
+            [ "$wait" = 0 ] && break
+            echo "publish failed, retrying in ${wait}s"; sleep "$wait"
+          done
+          echo "::error::Code Connect publish failed 4 times (Figma API down?). Re-run this workflow later."
+          exit 1
         env:
           FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
