@@ -11,11 +11,13 @@
 //             vs the Figma VARIANT property of the same name
 //   states    :hover / :focus-visible / :active / :disabled in the component's .module.css
 //             vs the options of the Figma `state` property
+//   booleans  boolean props (loading?: boolean) vs a Figma property of the same name (BOOLEAN, or a
+//             true/false VARIANT like Dot `active`) or a `state` option of that name (Button state=loading)
 // Only what the code has and Figma lacks counts as drift. Figma-only properties (state, breakpoint,
 // scrolled, theme) are design states without a prop and are expected.
 // Not checked: tokens. The Figma variables REST API needs `file_variables:read`, an Enterprise-only scope.
 //
-// Per-template opt-out with a reason: `// drift-ignore=state:hover  <why>`
+// Per-template opt-out with a reason: `// drift-ignore=state:hover  <why>` (also variant:value, prop:name)
 //
 // Needs FIGMA_ACCESS_TOKEN (scopes: file_content:read, file_comments:write for --comment).
 
@@ -70,6 +72,11 @@ function codeVariants(source) {
   return out
 }
 
+function codeBooleans(source) {
+  const tsx = readFileSync(join(ROOT, source), 'utf8')
+  return [...new Set([...tsx.matchAll(/(\w+)\??\s*:\s*boolean\b/g)].map((x) => x[1]))]
+}
+
 function codeStates(source) {
   const css = join(ROOT, source.replace(/\.tsx$/, '.module.css'))
   if (!existsSync(css)) return []
@@ -94,8 +101,17 @@ function diff(t, defs) {
     }
   }
 
-  const states = codeStates(t.source).filter((s) => !t.ignore.has(`state:${s}`))
   const figStates = props.state?.type === 'VARIANT' ? props.state.variantOptions : null
+
+  for (const name of codeBooleans(t.source)) {
+    if (t.ignore.has(`prop:${name}`)) continue
+    const fig = props[name]
+    const asProperty = fig && (fig.type === 'BOOLEAN' || (fig.type === 'VARIANT' && fig.variantOptions.includes('true')))
+    if (asProperty || figStates?.includes(name)) continue
+    issues.push(`boolean prop \`${name}\` exists in code, Figma has neither a \`${name}\` property nor \`state=${name}\``)
+  }
+
+  const states = codeStates(t.source).filter((s) => !t.ignore.has(`state:${s}`))
   for (const s of states) {
     if (!figStates) issues.push(`CSS has :${s === 'focus' ? 'focus-visible' : s}, the Figma component has no \`state\` property`)
     else if (!figStates.includes(s)) issues.push(`CSS has :${s === 'focus' ? 'focus-visible' : s}, Figma \`state\` has only ${figStates.join(' | ')}`)
@@ -163,4 +179,5 @@ for (const [fileKey, ts] of byFile) {
 }
 
 console.log(drift ? `\n${drift} component(s) out of date in Figma` : `\nFigma is in sync with the code (${templates.length} components)`)
-process.exit(drift ? 1 : 0)
+// exitCode, not exit(): exiting with fetch sockets still open trips a libuv assertion on Windows
+process.exitCode = drift ? 1 : 0
