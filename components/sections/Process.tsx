@@ -1,4 +1,5 @@
 import SectionLabel from '@/components/ui/SectionLabel'
+import ProcessRow from './ProcessRow'
 import styles from './Process.module.css'
 
 const steps = [
@@ -17,11 +18,7 @@ export default function Process() {
       <SectionLabel>Process</SectionLabel>
       <div className={styles.list}>
         {steps.map((step) => (
-          <div key={step.num} className={styles.row}>
-            <span className={styles.num}>{step.num}</span>
-            <h3>{step.title}</h3>
-            <p>{step.desc}</p>
-          </div>
+          <ProcessRow key={step.num} num={step.num} title={step.title} description={step.desc} />
         ))}
       </div>
     </section>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import IconButton from '@/components/ui/IconButton'
 import styles from './Lightbox.module.css'
 
 type SlideImage = { src: string; alt: string }
@@ -55,13 +56,13 @@ export default function Lightbox({ images, startIndex, onClose, onNavigate }: Pr
       className={`${styles.lightbox} ${visible ? styles.open : ''}`}
       onClick={(e) => { if (e.target === e.currentTarget) handleClose() }}
     >
-      <button className={styles.close} onClick={handleClose} aria-label="Close">✕</button>
-      <button className={styles.prev} onClick={() => goTo(idx - 1)} aria-label="Previous">←</button>
+      <IconButton variant="overlay" className={styles.close} onClick={handleClose} aria-label="Close">✕</IconButton>
+      <IconButton variant="overlay" className={styles.prev} onClick={() => goTo(idx - 1)} aria-label="Previous">←</IconButton>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className={styles.img} src={images[idx].src} alt={images[idx].alt} />
 
-      <button className={styles.next} onClick={() => goTo(idx + 1)} aria-label="Next">→</button>
+      <IconButton variant="overlay" className={styles.next} onClick={() => goTo(idx + 1)} aria-label="Next">→</IconButton>
       <span className={styles.counter}>{idx + 1} / {images.length}</span>
     </div>
   )

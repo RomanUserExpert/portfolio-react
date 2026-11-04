@@ -27,33 +27,9 @@
   padding: var(--space-16) 0;
 }
 
+/* Logo look lives in components/ui/Logo; here only its place in the bar */
 .logo {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-8);
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-regular);
-  color: var(--color-fg-default);
   margin-right: auto;
-  letter-spacing: var(--font-letter-spacing-display);
-  line-height: var(--font-line-height-none);
-}
-
-.logoIcon {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  animation: logoSpin 8s linear infinite;
-}
-
-.logoAccent {
-  fill: var(--color-icon-accent);
-}
-
-@keyframes logoSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
 }
 
 .navLinks {
@@ -61,53 +37,6 @@
   display: flex;
   gap: var(--space-24);
   margin-right: var(--space-24);
-}
-
-.navLinks a {
-  font-size: var(--font-size-sm);
-  color: var(--color-fg-muted);
-  transition: color var(--duration-fast);
-}
-
-.navLinks a:hover {
-  color: var(--color-fg-default);
-}
-
-.themeToggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  width: 82px;
-  padding: var(--space-4) 0;
-  background: transparent;
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  color: var(--color-fg-muted);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  white-space: nowrap;
-  transition: color var(--duration-fast), border-color var(--duration-fast);
-}
-
-.themeToggle:hover {
-  color: var(--color-fg-default);
-  border-color: var(--color-border-strong);
-}
-
-.themeIcon {
-  font-size: var(--font-size-md);
-  line-height: var(--font-line-height-none);
-  display: flex;
-  align-items: center;
-}
-
-.themeLabel {
-  display: flex;
-  align-items: center;
-  line-height: var(--font-line-height-none);
 }
 
 @media (max-width: 768px) {

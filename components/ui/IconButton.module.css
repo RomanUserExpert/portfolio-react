@@ -1,0 +1,53 @@
+/* Look only. Position, offsets and z-index come from the parent via className. */
+.surface,
+.surface-square,
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  cursor: pointer;
+}
+
+.surface {
+  width: var(--size-control-md);
+  height: var(--size-control-md);
+  background: var(--color-bg-default);
+  border-color: var(--color-border-default);
+  border-radius: var(--radius-full);
+  color: var(--color-fg-default);
+  font-size: var(--font-size-xl);
+  transition: border-color var(--duration-fast), background var(--duration-fast);
+}
+
+.surface-square {
+  width: var(--size-control-sm);
+  height: var(--size-control-sm);
+  background: var(--color-bg-default);
+  border-color: var(--color-border-default);
+  border-radius: var(--radius-sm);
+  color: var(--color-fg-default);
+  /* opacity: Carousel keeps the expand button hidden until hover */
+  transition: opacity var(--duration-fast), border-color var(--duration-fast), background var(--duration-fast);
+}
+
+.surface:hover,
+.surface-square:hover {
+  background: var(--color-bg-subtle-hover);
+  border-color: var(--color-border-strong);
+}
+
+.overlay {
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
+  background: var(--component-lightbox-control-bg);
+  border-color: var(--component-lightbox-border);
+  border-radius: var(--radius-full);
+  color: var(--component-lightbox-fg);
+  font-size: var(--font-size-2xl);
+  transition: background var(--duration-fast);
+}
+
+.overlay:hover {
+  background: var(--component-lightbox-control-bg-hover);
+}

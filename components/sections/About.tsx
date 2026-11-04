@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import Pill from '@/components/ui/Pill'
 import SectionLabel from '@/components/ui/SectionLabel'
+import TextLink from '@/components/ui/TextLink'
 import styles from './About.module.css'
 
 const domains = [
@@ -40,14 +42,14 @@ export default function About() {
           <div className={styles.sidebarBlock}>
             <span className={styles.sidebarLabel}>Tools</span>
             <div className={styles.tagFlow}>
-              {tools.map((t) => <span key={t}>{t}</span>)}
+              {tools.map((t) => <Pill key={t} label={t} />)}
             </div>
           </div>
           <div className={styles.sidebarBlock}>
             <span className={styles.sidebarLabel}>Profiles</span>
             <div className={styles.sidebarLinks}>
               {profiles.map((p) => (
-                <a key={p.href} href={p.href} target="_blank" rel="noopener">{p.label}</a>
+                <TextLink key={p.href} variant="muted" href={p.href} target="_blank" rel="noopener">{p.label}</TextLink>
               ))}
             </div>
           </div>

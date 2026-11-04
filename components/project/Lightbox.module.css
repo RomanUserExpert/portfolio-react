@@ -25,22 +25,11 @@
   user-select: none;
 }
 
+/* Controls are IconButton variant="overlay"; here only their placement */
 .close,
 .prev,
 .next {
   position: fixed;
-  width: var(--size-control-lg);
-  height: var(--size-control-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--component-lightbox-control-bg);
-  border: 1px solid var(--component-lightbox-border);
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  color: var(--component-lightbox-fg);
-  font-size: var(--font-size-2xl);
-  transition: background var(--duration-fast);
 }
 
 .close {
@@ -56,12 +45,6 @@
 
 .prev { left: var(--space-20); }
 .next { right: var(--space-20); }
-
-.close:hover,
-.prev:hover,
-.next:hover {
-  background: var(--component-lightbox-control-bg-hover);
-}
 
 .counter {
   position: fixed;

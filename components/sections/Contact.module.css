@@ -40,21 +40,6 @@
   fill: var(--color-icon-accent);
 }
 
-.email {
-  display: inline-flex;
-  align-items: center;
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-fg-accent);
-  padding-bottom: var(--space-2);
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--duration-fast);
-}
-
-.email:hover {
-  border-bottom-color: var(--color-border-accent);
-}
-
 @media (max-width: 768px) {
   .title {
     font-size: clamp(var(--font-size-display-md), 12vw, var(--font-size-display-xl));
@@ -68,10 +53,5 @@
 
   .dot {
     display: none;
-  }
-
-  .email {
-    font-size: var(--font-size-md);
-    word-break: break-all;
   }
 }

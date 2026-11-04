@@ -1,0 +1,15 @@
+.dot {
+  width: var(--size-dot);
+  height: var(--size-dot);
+  border-radius: var(--radius-full);
+  background: var(--color-icon-subtle);
+  border: 1px solid var(--color-border-strong);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--duration-fast);
+}
+
+.active {
+  background: var(--color-fg-default);
+  border-color: var(--color-fg-default);
+}
